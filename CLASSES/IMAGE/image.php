@@ -58,9 +58,9 @@ class Image{
     /*
         Quality of Life methods (Dans la langue de shakespear (ou QOLM pour les intimes))
     */
-    public function load_image($email){
+    public function load_image($imageId){
         $TDG = new ImageTDG();
-        $res = $TDG->get_by_email($email);
+        $res = $TDG->get_by_imageId($imageId);
 
         if(!$res)
         {
@@ -68,10 +68,11 @@ class Image{
             return false;
         }
 
-        $this->id = $res['id'];
-        $this->email = $res['email'];
-        $this->username = $res['username'];
-        $this->password = $res['password'];
+        $this->imageId = $res['imageId'];
+        $this->imageUrl = $res['imageUrl'];
+        $this->albumId = $res['albumId'];
+        $this->description = $res['description'];
+        $this->dateCreation = $res['dateCreation'];
 
         $TDG = null;
         return true;
@@ -91,22 +92,10 @@ class Image{
 
         $this->description = $description;
 
-        $TDG = new imageTDG();
+        $TDG = new imageTDG(); // get instance -> voir albumTDG
         $res = $TDG->update_description($this->imageId, $this->description); 
-
-        if($res){
-          $_SESSION["userName"] = $this->username;
-          $_SESSION["userEmail"] = $this->email;
-        }
 
         $TDG = null;
         return $res;
-    }
-
-    public static function get_username_by_ID($id){
-        $TDG = new UserTDG();
-        $res = $TDG->get_by_id($id);
-        $TDG = null;
-        return $res["username"];
     }
 }
