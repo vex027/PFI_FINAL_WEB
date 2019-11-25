@@ -3,26 +3,20 @@ include_once __DIR__ . "/userTDG.PHP";
 
 class User{
 
-    private $id;
-    private $email;
+    private $userId;   
     private $username;
+    private $email;
     private $password;
-
-    /*
-        utile si on utilise un factory pattern
-    */
+    private $imageProfile
+    
     public function __construct(){
-        //$this->id = $id;
-        //$this->email = $email;
-        //$this->username = $username;
-        //$this->password = $password;
-        //$this->TDG = new UserTDG;
+
     }
 
 
     //getters
     public function get_id(){
-        return $this->id;
+        return $this->userId;
     }
 
     public function get_email(){
@@ -37,6 +31,9 @@ class User{
         return $this->password;
     }
 
+    public function get_imagesProfile(){
+        return $this->$imageProfile;
+    }
 
     //setters
     public function set_email($email){
@@ -51,10 +48,11 @@ class User{
         $this->password = $password;
     }
 
+    public function set_imageProfile($imageProfile){
+        $this->imageProfile = $imageProfile;
+    }
 
-    /*
-        Quality of Life methods (Dans la langue de shakespear (ou QOLM pour les intimes))
-    */
+
     public function load_user($email){
         $TDG = new UserTDG();
         $res = $TDG->get_by_email($email);
