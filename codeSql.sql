@@ -1,10 +1,10 @@
-create table if not exists Usager
+create table if not exists User
 (
 userId integer(10) auto_increment primary key,
 username varchar(30) not null,
 email varchar(25) unique not null,
 password VARCHAR(250) NOT NULL,
-imageProfil LONGTEXT not null
+imageProfil LONGTEXT not null default 'default.jpg'
 );
 
 create table if not exists Album
@@ -34,5 +34,6 @@ create table if not exists Commentaire
 commentaireId integer(10) auto_increment primary key,
 type char(3) constraint type_commentaire check(type = 'IMG' or type = 'ALB'),
 dateCreation date not null,
-contenu LONGTEXT not null
+contenu LONGTEXT not null,
+parentID integer(10),
 );

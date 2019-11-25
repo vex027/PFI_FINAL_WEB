@@ -9,7 +9,7 @@ class UserTDG extends DBAO{
 
     public function __construct(){
         Parent::__construct();
-        $this->tableName = "users";
+        $this->tableName = "Users";
     }
 
     //create table
@@ -18,21 +18,24 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "CREATE TABLE IF NOT EXISTS $tableName (id INTEGER(10) AUTO INCREMENT PRIMARY KEY,
-            email VARCHAR(25) UNIQUE NOT NULL,
-            username VARCHAR(25) NOT NULL,
-            password VARCHAR(250) NOT NULL)";
+            $query = "create table if not exists Usager
+            (
+            userId integer(10) auto_increment primary key,
+            username varchar(30) not null,
+            email varchar(25) unique not null,
+            password VARCHAR(250) NOT NULL,
+            imageProfil LONGTEXT not null+
+            )";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $resp = true;
         }
 
-        //error catch and msg display
         catch(PDOException $e)
         {
             $resp = false;
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $resp;
     }
@@ -50,12 +53,12 @@ class UserTDG extends DBAO{
             $resp = true;
         }
 
-        //error catch and msg display
+
         catch(PDOException $e)
         {
             $resp = false;
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $resp;
     }
@@ -66,7 +69,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id, email, username FROM $tableName WHERE id=:id";
+            $query = "SELECT id,username, email, imageProfile FROM $tableName WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -78,7 +81,7 @@ class UserTDG extends DBAO{
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $result;
     }
@@ -101,7 +104,7 @@ class UserTDG extends DBAO{
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $result;
     }
@@ -124,7 +127,7 @@ class UserTDG extends DBAO{
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $result;
     }
@@ -135,7 +138,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id, email, username FROM $tableName";
+            $query = "SELECT id, username, email,imageProfile FROM $tableName";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -146,13 +149,12 @@ class UserTDG extends DBAO{
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
         $conn = null;
         return $result;
     }
 
 
-    public function add_user($email, $username, $password){
+    public function add_user($email, $username, $password ){ // password déja hash
 
         try{
             $conn = $this->connect();
@@ -170,15 +172,10 @@ class UserTDG extends DBAO{
         {
             $resp =  false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
 
-
-    /*
-      update juste pour les infos non sensibles
-    */
     public function update_info($email, $username, $id){
 
         try{
@@ -197,14 +194,10 @@ class UserTDG extends DBAO{
         {
             $resp = false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
 
-    /*
-      update juste pour le password
-    */
     public function update_password($NHP, $id){
 
         try{
@@ -222,7 +215,7 @@ class UserTDG extends DBAO{
         {
             $resp = false;
         }
-        //fermeture de connection PDO
+
         $conn = null;
         return $resp;
     }
