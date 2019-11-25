@@ -158,4 +158,41 @@ class AlbumTDG extends DBAO{
         $conn = null;
         return $resp;
     }
+
+    public function update_description($description,$id){
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "UPDATE $tableName SET description = :description where albumId = :id";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':id', $albumId);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
+
+    public function delete_album($albumId){
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "DELETE FROM $tableName where albumId = :id";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':id', $albumId);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
 }

@@ -62,28 +62,20 @@ class Album{
         return true;
     }
 
-    public function register($email, $username, $pw, $vpw){
+    public function add_album($title, $authorID, $description){
 
-        //check is both password are equals
-        if(!($pw === $vpw) || empty($pw) || empty($vpw))
+        if(empty($tile) || empty($authorID) || empty($description))
         {
             return false;
         }
 
-        //check if email is used
-        if(!$this->validate_email_not_exists($email))
-        {
-            return false;
-        }
-
-        //add user to DB
-        $TDG = new UserTDG();
-        $res = $TDG->add_user($email, $username, password_hash($pw, PASSWORD_DEFAULT));
+        $TDG = AlbumTDG::get_instance();
+        $res = $TDG->add_album($title, $authorID, $description);
         $TDG = null;
         return true;
     }
 
-    public function update_user_info($email, $newmail, $newname){
+    public function update_album($description){
 
         //load user infos
         if(!$this->load_user($email))
@@ -106,11 +98,6 @@ class Album{
 
         $TDG = new UserTDG();
         $res = $TDG->update_info($this->email, $this->username, $this->id);
-
-        if($res){
-          $_SESSION["userName"] = $this->username;
-          $_SESSION["userEmail"] = $this->email;
-        }
 
         $TDG = null;
         return $res;
