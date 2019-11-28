@@ -1,5 +1,4 @@
 use mysql;
-drop database webfinal if exists;
 create database if not exists webfinal;
 use webfinal;
 
@@ -36,7 +35,7 @@ constraint FK_albumID_Image foreign key(albumId) references Album(albumId)
 
 create table if not exists Commentaire
 (
-commentaireId integer(10) auto_increment primary key,
+commentaireID integer(10) auto_increment primary key,
 typeCom char(3) not null,
 dateCreation date not null,
 contenu LONGTEXT not null,
