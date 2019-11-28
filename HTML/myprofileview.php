@@ -1,9 +1,7 @@
 <div class="container" style="margin-top:30px">
-  <h1>My Profile</h1>
+  <h1><?php echo $_GET['username']?> 's Profile</h1>
     <div class="row">
         <div class="col-sm-4">
-
-
           <div class="container align-middle border mb-sm-5">
             <h3>Update Infos</h3>
             <form method = "post" action = "./DOMAINLOGIC/updateinfo.dom.php">

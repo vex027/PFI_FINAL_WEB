@@ -1,14 +1,12 @@
 <?php
-
     if(isset($_SESSION["userID"])){
         $navLinks = '
         <li class="nav-item">
             <a class="nav-link" href="DOMAINLOGIC/logout.dom.php">LOGOUT</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="myProfile.php">MY PROFILE</a>
-        </li>
-        ';
+            <a class="nav-link" href="myProfile.php?username='.$_SESSION["userName"].'">MY PROFILE</a>
+        </li>';
     }
     else{
     $navLinks = '

@@ -62,7 +62,7 @@ class User{
             return false;
         }
 
-        $this->id = $res['userID'];
+        $this->userId = $res['userID'];
         $this->email = $res['email'];
         $this->username = $res['username'];
         $this->password = $res['password'];
