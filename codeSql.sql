@@ -28,7 +28,7 @@ imageUrl LONGTEXT not null,
 albumId integer(10) not null,
 description longtext,
 dateCreation date not null,
-
+likes int default 0,
 constraint FK_albumID_Image foreign key(albumId) references Album(albumId)
 );
 
