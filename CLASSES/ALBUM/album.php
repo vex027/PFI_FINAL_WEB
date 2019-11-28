@@ -40,23 +40,20 @@ class Album{
         $this->description = $description;
     }
 
-    /*
-        Quality of Life methods (Dans la langue de shakespear (ou QOLM pour les intimes))
-    */
-    public function load_user($email){
-        $TDG = new UserTDG();
-        $res = $TDG->get_by_email($email);
-
+    public function load_album($id){
+        $TDG = new AlbumTDG();
+        $res = $TDG->get_by_id($id);
+    
         if(!$res)
         {
             $TDG = null;
             return false;
         }
-
-        $this->id = $res['id'];
-        $this->email = $res['email'];
-        $this->username = $res['username'];
-        $this->password = $res['password'];
+        $this->albumID = $res['albumId'];
+        $this->title = $res['title'];
+        $this->authorID = $res['authorID'];
+        $this->description = $res['description'];
+        $this->date = $res['date'];
 
         $TDG = null;
         return true;
@@ -75,38 +72,23 @@ class Album{
         return true;
     }
 
-    public function update_album($description){
+    public function update_description($description,$albumID){
 
-        //load user infos
-        if(!$this->load_user($email))
-        {
-          return false;
-        }
-
-        if(empty($this->id) || empty($newmail) || empty($newname)){
-          return false;
-        }
-
-        //check if email is already used
-        if(!$this->validate_email_not_exists($newmail) && $email != $newmail)
+        if(!$this->load_album($albumID))
         {
             return false;
         }
 
-        $this->email = $newmail;
-        $this->username = $newname;
+        if(empty($description)){
+            return false;
+        }
 
-        $TDG = new UserTDG();
-        $res = $TDG->update_info($this->email, $this->username, $this->id);
+        $this->description = $description;
+
+        $TDG = new AlbumTDG();
+        $res = $TDG->update_description($albumID);
 
         $TDG = null;
         return $res;
-    }
-
-    public static function get_username_by_ID($id){
-        $TDG = new UserTDG();
-        $res = $TDG->get_by_id($id);
-        $TDG = null;
-        return $res["username"];
     }
 }
