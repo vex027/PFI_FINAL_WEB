@@ -14,7 +14,7 @@ class UserTDG extends DBAO{
 
     public function getInstance(){
         if(is_null($this->_instance)){
-            $this->_instance = new userTDG();
+            $this->_instance = new UserTDG();
         }
         return $this->_instance;
     }
@@ -75,7 +75,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id,username, email, imageProfile FROM $tableName WHERE userID=:id";
+            $query = "SELECT userId,username, email, imageProfile FROM $tableName WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -144,7 +144,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id, username, email,imageProfile FROM $tableName";
+            $query = "SELECT userId, username, email,imageProfile FROM $tableName";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -187,7 +187,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET email=:email, username=:username WHERE id=:id";
+            $query = "UPDATE $tableName SET email=:email, username=:username WHERE userId=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':username', $username);
@@ -209,9 +209,31 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET password=:password WHERE id=:id";
+            $query = "UPDATE $tableName SET password=:password WHERE userId=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':password', $NHP);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $resp = true;
+        }
+
+        catch(PDOException $e)
+        {
+            $resp = false;
+        }
+
+        $conn = null;
+        return $resp;
+    }
+
+    public function update_image($id, $imageProfile){
+
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "UPDATE $tableName SET imageProfil= :imageProfil WHERE userId=:id";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageProfil', $imageProfile);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $resp = true;

@@ -7,7 +7,7 @@ class User{
     private $username;
     private $email;
     private $password;
-    private $imageProfile
+    private $imageProfile;
     
     public function __construct(){
 
@@ -105,19 +105,17 @@ class User{
 
     public function register($email, $username, $pw, $vpw){
 
-        //check is both password are equals
+
         if(!($pw === $vpw) || empty($pw) || empty($vpw))
         {
             return false;
         }
 
-        //check if email is used
         if(!$this->validate_email_not_exists($email))
         {
             return false;
         }
 
-        //add user to DB
         $TDG = UserTDG::getInstance();
         $res = $TDG->add_user($email, $username, password_hash($pw, PASSWORD_DEFAULT));
         $TDG = null;
@@ -126,7 +124,7 @@ class User{
 
     public function update_user_info($email, $newmail, $newname){
 
-        //load user infos
+
         if(!$this->load_user($email))
         {
           return false;
@@ -136,7 +134,6 @@ class User{
           return false;
         }
 
-        //check if email is already used
         if(!$this->validate_email_not_exists($newmail) && $email != $newmail)
         {
             return false;
@@ -162,30 +159,49 @@ class User{
     */
     public function update_user_pw($email, $oldpw, $pw, $pwv){
 
-        //load user infos
+
         if(!$this->load_user($email))
         {
           return false;
         }
 
-        //check if passed param are valids
+
         if(empty($pw) || $pw != $pwv){
           return false;
         }
 
-        //verify password
         if(!password_verify($oldpw, $this->password))
         {
             return false;
         }
 
-        //create TDG and update to new hash
         $TDG = UserTDG::getInstance();
         $NHP = password_hash($pw, PASSWORD_DEFAULT);
         $res = $TDG->update_password($NHP, $this->id);
         $this->password = $NHP;
         $TDG = null;
-        //only return true if update_user_pw returned true
+
+        return $res;
+    }
+
+
+    public function update_user_image($email,$imageProfile){
+
+
+        if(!$this->load_user($email))
+        {
+          return false;
+        }
+
+        if(empty($imageProfile)){
+          return false;
+        }
+
+        $TDG = UserTDG::getInstance();
+        $res = $TDG->update_image($this->$id, $imageProfile);
+        $this->set_imageProfile($imageProfile);
+        $TDG = null;
+
         return $res;
     }
 
