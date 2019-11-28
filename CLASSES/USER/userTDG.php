@@ -12,7 +12,7 @@ class UserTDG extends DBAO{
         $this->tableName = "Users";
     }
 
-    public function getInstance(){
+    public static function getInstance(){
         if(is_null($this->_instance)){
             $this->_instance = new UserTDG();
         }

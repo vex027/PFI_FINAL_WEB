@@ -24,8 +24,8 @@
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <div class="container">
-        <h1>Not a Forum</h1>
-        <p>or maybe it is, who knows?</p>
+        <h1>J'aime les albums</h1>
+        <p>genre beaucoup</p>
     </div>
 </div>
 
@@ -37,7 +37,7 @@
                 echo $navLinks;
             ?>
             <li class="nav-item">
-                <a class="nav-link" href="billboard.php">BILLBOARD</a>
+                <a class="nav-link" href="album.php">ALBUMS</a>
             </li>
         </ul>
 
