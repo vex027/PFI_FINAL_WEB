@@ -23,9 +23,9 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "CREATE TABLE If NOT EXISTS Album(albumId integer(10) AUTO_INCREMENT primary key,
+            $query = "CREATE TABLE If NOT EXISTS Album(albumID integer(10) AUTO_INCREMENT primary key,
             titre varchar(60) not null,
-            authorId integer(10) not null,
+            authorID integer(10) not null,
             description LONGTEXT,
             dateCreation date not null,            
             constraint FK_AUTHORID_ALBUM foreign key(authorID) references Usager(userID)
@@ -64,7 +64,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE albumId=:id";
+            $query = "SELECT * FROM $tableName WHERE albumID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -104,7 +104,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE authorId=:authorID";
+            $query = "SELECT * FROM $tableName WHERE authorID=:authorID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':authorID', $id);
             $stmt->execute();
@@ -143,10 +143,10 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "INSERT INTO $tableName (titre, authorId, description) VALUES (:titre, :authorId, :description)";
+            $query = "INSERT INTO $tableName (titre, authorId, description) VALUES (:titre, :authorID, :description)";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':titre', $title);
-            $stmt->bindParam(':authorId', $authorID);
+            $stmt->bindParam(':authorID', $authorID);
             $stmt->bindParam(':description', $description);
             $stmt->execute();
             $resp =  true;
@@ -163,7 +163,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET description = :description where albumId = :id";
+            $query = "UPDATE $tableName SET description = :description where albumID = :id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':id', $albumId);
@@ -182,7 +182,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "DELETE FROM $tableName where albumId = :id";
+            $query = "DELETE FROM $tableName where albumID = :id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $albumId);
             $stmt->execute();

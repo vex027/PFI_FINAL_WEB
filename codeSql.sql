@@ -4,7 +4,7 @@ use webfinal;
 
 create table if not exists Users
 (
-userId integer(10) auto_increment primary key,
+userID integer(10) auto_increment primary key,
 username varchar(30) not null,
 email varchar(25) unique not null,
 password VARCHAR(250) NOT NULL,
@@ -13,9 +13,9 @@ imageProfil varchar(500) not null default 'Images_Profil\default.jpg'
 
 create table if not exists Album
 (
-albumId integer(10) auto_increment primary key,
+albumID integer(10) auto_increment primary key,
 titre varchar(60) not null,
-authorId integer(10) not null,
+authorID integer(10) not null,
 description LONGTEXT,
 dateCreation date not null,
 
@@ -24,7 +24,7 @@ constraint FK_AUTHORID_ALBUM foreign key(authorID) references Usager(userID)
 
 create table if not exists Image
 (
-imageId integer(10) auto_increment primary key,
+imageID integer(10) auto_increment primary key,
 imageUrl LONGTEXT not null,
 albumId integer(10) not null,
 description longtext,

@@ -26,13 +26,13 @@ class AlbumTDG extends DBAO{
             $tableName = $this->tableName;
             $query = "create table if not exists Image
             (
-            imageId integer(10) auto_increment primary key,
+            imageID integer(10) auto_increment primary key,
             imageUrl LONGTEXT not null,
-            albumId integer(10) not null,
+            albumID integer(10) not null,
             description longtext default '',
             dateCreation date not null,
 
-            constraint FK_albumID_Image foreign key(albumId) references Album(albumId)
+            constraint FK_albumID_Image foreign key(albumID) references Album(albumID)
             )";
             $stmt = $conn->prepare($query);
             $stmt->execute();
@@ -69,7 +69,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE imageId=:id";
+            $query = "SELECT * FROM $tableName WHERE imageID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -89,9 +89,9 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE albumId=:albumId";
+            $query = "SELECT * FROM $tableName WHERE albumID=:albumID";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':albumId', $albumId);
+            $stmt->bindParam(':albumID', $albumId);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
@@ -149,7 +149,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET description = :description where imageId = :id";
+            $query = "UPDATE $tableName SET description = :description where imageID = :id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':id', $albumId);
@@ -168,9 +168,9 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "DELETE FROM $tableName where imageId = :imageId";
+            $query = "DELETE FROM $tableName where imageID = :imageID";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':imageId', $imageId);
+            $stmt->bindParam(':imageID', $imageId);
             $stmt->execute();
             $resp =  true;
         }

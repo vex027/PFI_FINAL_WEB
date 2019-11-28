@@ -26,7 +26,7 @@ class CommentaireTDG extends DBAO{
             $tableName = $this->tableName;
             $query = "create table if not exists Commentaire
             (
-            commentaireId integer(10) auto_increment primary key,
+            commentaireID integer(10) auto_increment primary key,
             typeCom char(3) constraint type_commentaire check(type = 'IMG' or type = 'ALB'),
             dateCreation date not null,
             contenu LONGTEXT not null,
@@ -165,7 +165,7 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET contenu=:contenu WHERE userId=:id";
+            $query = "UPDATE $tableName SET contenu=:contenu WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':contenu', $contenu);
             $stmt->bindParam(':id', $id);

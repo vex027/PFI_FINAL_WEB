@@ -25,8 +25,6 @@
                 <button class="btn btn-success mb-sm-3" type="submit">Update profile</button>
             </form>
           </div>
-
-
           <div class="container align-middle border mb-sm-5">
             <h3>Change Password</h3>
             <form method = "post" action = "./DOMAINLOGIC/updatepw.dom.php">

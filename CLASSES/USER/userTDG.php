@@ -26,7 +26,7 @@ class UserTDG extends DBAO{
             $tableName = $this->tableName;
             $query = "create table if not exists Usager
             (
-            userId integer(10) auto_increment primary key,
+            userID integer(10) auto_increment primary key,
             username varchar(30) not null,
             email varchar(25) unique not null,
             password VARCHAR(250) NOT NULL,
@@ -187,7 +187,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET email=:email, username=:username WHERE userId=:id";
+            $query = "UPDATE $tableName SET email=:email, username=:username WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':username', $username);
@@ -209,7 +209,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET password=:password WHERE userId=:id";
+            $query = "UPDATE $tableName SET password=:password WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':password', $NHP);
             $stmt->bindParam(':id', $id);
@@ -231,7 +231,7 @@ class UserTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET imageProfil= :imageProfil WHERE userId=:id";
+            $query = "UPDATE $tableName SET imageProfil= :imageProfil WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':imageProfil', $imageProfile);
             $stmt->bindParam(':id', $id);
