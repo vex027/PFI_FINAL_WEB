@@ -21,7 +21,7 @@
     if($aUser->Login($email, $pw))
     {
         login($aUser->get_id(), $aUser->get_email(), $aUser->get_username());
-        header("Location: ../billboard.php");
+        header("Location: ../album.php");
         die();
     }
 
