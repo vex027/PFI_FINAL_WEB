@@ -3,59 +3,44 @@ include_once __DIR__ . "/commentaireTDG.PHP";
 
 class Commentaire{
 
-    private $userId;   
-    private $username;
-    private $email;
-    private $password;
-    private $imageProfile;
+    private $commentaireID;   
+    private $typeCom;
+    private $dateCreation;
+    private $contenu;
+    private $parentID;
     
     public function __construct(){
-
     }
-
 
     //getters
-    public function get_id(){
-        return $this->userId;
+    public function get_commentaireID(){
+        return $this->commentaireID;
     }
 
-    public function get_email(){
-        return $this->email;
+    public function get_typeCom(){
+        return $this->typeCom;
     }
 
-    public function get_username(){
-        return $this->username;
+    public function get_dateCreation(){
+        return $this->dateCreation;
     }
 
-    public function get_password(){
-        return $this->password;
+    public function get_contenu(){
+        return $this->contenu;
     }
 
-    public function get_imagesProfile(){
-        return $this->$imageProfile;
+    public function get_parentID(){
+        return $this->$parentID;
     }
 
     //setters
-    public function set_email($email){
-        $this->email = $email;
+    public function set_contenu($contenu){
+        $this->contenu = $contenu;
     }
 
-    public function set_username($username){
-        $this->username = $username;
-    }
-
-    public function set_password($password){
-        $this->password = $password;
-    }
-
-    public function set_imageProfile($imageProfile){
-        $this->imageProfile = $imageProfile;
-    }
-
-
-    public function load_user($email){
-        $TDG = UserTDG::getInstance();
-        $res = $TDG->get_by_email($email);
+    public function load_Commentaire($id){
+        $TDG = CommentaireTDG::getInstance();
+        $res = $TDG->get_by_id($id);
 
         if(!$res)
         {
@@ -63,88 +48,34 @@ class Commentaire{
             return false;
         }
 
-        $this->id = $res['id'];
-        $this->email = $res['email'];
-        $this->username = $res['username'];
-        $this->password = $res['password'];
+        $this->commentaireID = $res['commentaireID'];
+        $this->typeCom = $res['typeCom'];
+        $this->dateCreation = $res['dateCreation'];
+        $this->contenu = $res['contenu'];
+        $this->parentID = $res['parentID'];
 
         $TDG = null;
         return true;
     }
 
-
-    //Login Validation
-    public function Login($email, $pw){
-
-        // Regarde si l'utilisateur existes deja
-        if(!$this->load_user($email))
-        {
-            return false;
-        }
-
-        // Regarde si le password est verifiable
-        if(!password_verify($pw, $this->password))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    //Register Validation
-    public function validate_email_not_exists($email){
-        $TDG = UserTDG::getInstance();
-        $res = $TDG->get_by_email($email);
-        $TDG = null;
-        if($res)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function register($email, $username, $pw, $vpw){
+    public function update_commentaire_info($id, $contenu){
 
 
-        if(!($pw === $vpw) || empty($pw) || empty($vpw))
-        {
-            return false;
-        }
-
-        if(!$this->validate_email_not_exists($email))
-        {
-            return false;
-        }
-
-        $TDG = UserTDG::getInstance();
-        $res = $TDG->add_user($email, $username, password_hash($pw, PASSWORD_DEFAULT));
-        $TDG = null;
-        return true;
-    }
-
-    public function update_user_info($email, $newmail, $newname){
-
-
-        if(!$this->load_user($email))
+        if(!$this->load_Commentaire($id))
         {
           return false;
         }
 
-        if(empty($this->id) || empty($newmail) || empty($newname)){
+        if(empty($this->id)){
           return false;
         }
 
-        if(!$this->validate_email_not_exists($newmail) && $email != $newmail)
-        {
-            return false;
-        }
 
-        $this->email = $newmail;
-        $this->username = $newname;
 
-        $TDG = new UserTDG::getInstance();
-        $res = $TDG->update_info($this->email, $this->username, $this->id);
+        $TDG = CommentaireTDG::getInstance();
+        $res = $TDG->update_contenu($contenu,$id);
+
+        $this->contenu = $contenu;
 
         if($res){
           $_SESSION["userName"] = $this->username;
@@ -153,63 +84,5 @@ class Commentaire{
 
         $TDG = null;
         return $res;
-    }
-
-    /*
-      @var: current $email, oldpw, new pw, newpw validation
-    */
-    public function update_user_pw($email, $oldpw, $pw, $pwv){
-
-
-        if(!$this->load_user($email))
-        {
-          return false;
-        }
-
-
-        if(empty($pw) || $pw != $pwv){
-          return false;
-        }
-
-        if(!password_verify($oldpw, $this->password))
-        {
-            return false;
-        }
-
-        $TDG = UserTDG::getInstance();
-        $NHP = password_hash($pw, PASSWORD_DEFAULT);
-        $res = $TDG->update_password($NHP, $this->id);
-        $this->password = $NHP;
-        $TDG = null;
-
-        return $res;
-    }
-
-
-    public function update_user_image($email,$imageProfile){
-
-
-        if(!$this->load_user($email))
-        {
-          return false;
-        }
-
-        if(empty($imageProfile)){
-          return false;
-        }
-
-        $TDG = UserTDG::getInstance();
-        $res = $TDG->update_image($this->$id, $imageProfile);
-        $this->set_imageProfile($imageProfile);
-        $TDG = null;
-
-        return $res;
-    }
-
-    public static function get_username_by_ID($id){
-        $TDG = UserTDG::getInstance();
-        $res = $TDG->get_by_id($id);
-        $TDG = null;
-        return $res["username"];
     }
 }
