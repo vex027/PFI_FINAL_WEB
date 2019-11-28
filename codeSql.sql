@@ -1,4 +1,7 @@
-create table if not exists User
+create database webfinal;
+use webfinal;
+
+create table if not exists Users
 (
 userId integer(10) auto_increment primary key,
 username varchar(30) not null,
@@ -32,7 +35,7 @@ constraint FK_albumID_Image foreign key(albumId) references Album(albumId)
 create table if not exists Commentaire
 (
 commentaireId integer(10) auto_increment primary key,
-type char(3) constraint type_commentaire check(type = 'IMG' or type = 'ALB'),
+typeCom char(3) not null,
 dateCreation date not null,
 contenu LONGTEXT not null,
 parentID integer(10),
