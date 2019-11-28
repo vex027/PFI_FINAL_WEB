@@ -142,7 +142,7 @@ class User{
         $this->email = $newmail;
         $this->username = $newname;
 
-        $TDG = new UserTDG::getInstance();
+        $TDG = UserTDG::getInstance();
         $res = $TDG->update_info($this->email, $this->username, $this->id);
 
         if($res){
