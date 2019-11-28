@@ -1,7 +1,7 @@
 <?php
-include_once __DIR__ . "/userTDG.PHP";
+include_once __DIR__ . "/commentaireTDG.PHP";
 
-class User{
+class Commentaire{
 
     private $userId;   
     private $username;
