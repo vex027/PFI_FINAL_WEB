@@ -1,21 +1,9 @@
-<?php
-  include __DIR__ . "/../UTILS/moduleloader.php";
-?>
+<div class="container" style="margin-top:30px">
+    <?php
+        include "./CLASSES/IMAGE/imageTDG.php";
+        $albumId = $_POST["albumID"];
 
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?php include "bootstrap.html";?>
-        <title> <?php echo $title ?> </title>
-    </head>
-    <body>
-        <?php include "navigationmodule.php";?>
-        <div class="container align-center text-center">
-              <?php  load_modules($content); ?>
-        </div>
-        <footer>
-        </footer>
-    </body>
-</html>
+
+
+    ?>
+</div>
