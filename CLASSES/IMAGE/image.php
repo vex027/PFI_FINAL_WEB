@@ -9,13 +9,9 @@ class Image{
     private $description;
     private $dateCreation;
 
-    /*
-        utile si on utilise un factory pattern
-    */
     public function __construct(){
         
     }
-
 
     //getters
     public function get_imageId(){
@@ -78,7 +74,7 @@ class Image{
         return true;
     }
 
-    public function update_image_description($imageId,$description){
+    public function update_image_description($imageId, $description){
 
         //load user infos
         if(!$this->load_image($imageId))
@@ -92,7 +88,7 @@ class Image{
 
         $this->description = $description;
 
-        $TDG = new imageTDG(); // get instance -> voir albumTDG
+        $TDG = ImageTDG::getInstance(); // get instance -> voir albumTDG
         $res = $TDG->update_description($this->imageId, $this->description); 
 
         $TDG = null;

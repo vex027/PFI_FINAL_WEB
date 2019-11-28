@@ -2,43 +2,50 @@
 
 include_once __DIR__ . "/../../UTILS/connector.php";
 
-class UserTDG extends DBAO{
+class AlbumTDG extends DBAO{
 
     private $tableName;
     private static $_instance = null;
 
-    public function __construct(){
+    private function __construct(){
         Parent::__construct();
-        $this->tableName = "users";
+        $this->tableName = "image";
     }
 
-    //create table
+    public function getInstance(){
+        if(is_null($this->_instance)){
+            $this->_instance = new ImageTDG();
+        }
+        return $this->_instance;
+    }
+
     public function createTable(){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "CREATE TABLE IF NOT EXISTS $tableName (id INTEGER(10) AUTO INCREMENT PRIMARY KEY,
-            email VARCHAR(25) UNIQUE NOT NULL,
-            username VARCHAR(25) NOT NULL,
-            password VARCHAR(250) NOT NULL)";
+            $query = "create table if not exists Image
+            (
+            imageId integer(10) auto_increment primary key,
+            imageUrl LONGTEXT not null,
+            albumId integer(10) not null,
+            description longtext default '',
+            dateCreation date not null,
+
+            constraint FK_albumID_Image foreign key(albumId) references Album(albumId)
+            )";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $resp = true;
         }
-
-        //error catch and msg display
         catch(PDOException $e)
         {
             $resp = false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
 
-
-    //drop table
     public function drop_table(){
 
         try{
@@ -49,182 +56,129 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
-        //error catch and msg display
         catch(PDOException $e)
         {
             $resp = false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
-
 
     public function get_by_id($id){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id, email, username FROM $tableName WHERE id=:id";
+            $query = "SELECT * FROM $tableName WHERE imageId=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetch();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
         $conn = null;
         return $result;
     }
 
-
-    public function get_by_email($email){
-
-        try{
-            $conn = $this->connect();
-            $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE email=:email";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetch();
-        }
-
-        catch(PDOException $e)
-        {
-            echo "Error: " . $e->getMessage();
-        }
-        //fermeture de connection PDO
-        $conn = null;
-        return $result;
-    }
-
-
-    public function get_by_username($username){
+    public function get_by_albumId($albumId){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE username=:username";
+            $query = "SELECT * FROM $tableName WHERE albumId=:albumId";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':albumId', $albumId);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
         $conn = null;
         return $result;
     }
 
-
-    public function get_all_users(){
+    public function get_all_images(){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT id, email, username FROM $tableName";
+            $query = "SELECT * FROM $tableName";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-        //fermeture de connection PDO
         $conn = null;
         return $result;
     }
 
-
-    public function add_user($email, $username, $password){
+    public function add_image($imageUrl, $albumID, $description, $dateCreation){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "INSERT INTO $tableName (email, username, password) VALUES (:email, :username, :password)";
+            $query = "INSERT INTO $tableName (imageUrl, albumID, description, dateCreation) VALUES (:imageUrl, :albumID, :description, :dateCreation)";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':imageUrl', $imageUrl);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':dateCreation', $dateCreation);
             $stmt->execute();
             $resp =  true;
         }
-
         catch(PDOException $e)
         {
             $resp =  false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
 
-
-    /*
-      update juste pour les infos non sensibles
-    */
-    public function update_info($email, $username, $id){
-
+    public function update_description($description, $id){
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET email=:email, username=:username WHERE id=:id";
+            $query = "UPDATE $tableName SET description = :description where imageId = :id";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':id', $albumId);
             $stmt->execute();
-            $resp = true;
+            $resp =  true;
         }
-
         catch(PDOException $e)
         {
-            $resp = false;
+            $resp =  false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
 
-    /*
-      update juste pour le password
-    */
-    public function update_password($NHP, $id){
-
+    public function delete_image($imageId){
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET password=:password WHERE id=:id";
+            $query = "DELETE FROM $tableName where imageId = :imageId";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':password', $NHP);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':imageId', $imageId);
             $stmt->execute();
-            $resp = true;
+            $resp =  true;
         }
-
         catch(PDOException $e)
         {
-            $resp = false;
+            $resp =  false;
         }
-        //fermeture de connection PDO
         $conn = null;
         return $resp;
     }
-
 }

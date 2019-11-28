@@ -13,7 +13,6 @@ class User{
 
     }
 
-
     //getters
     public function get_id(){
         return $this->userId;
