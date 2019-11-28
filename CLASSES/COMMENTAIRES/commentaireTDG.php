@@ -12,11 +12,11 @@ class CommentaireTDG extends DBAO{
         $this->tableName = "Commentaire";
     }
 
-    public function getInstance(){
-        if(is_null($this->_instance)){
-            $this->_instance = new CommentaireTDG();
+    public static function getInstance(){
+        if(is_null(self::$_instance)){
+            self::$_instance = new CommentaireTDG();
         }
-        return $this->_instance;
+        return self::$_instance;
     }
     //create table
     public function createTable(){

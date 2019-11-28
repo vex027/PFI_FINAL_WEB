@@ -13,12 +13,12 @@ class UserTDG extends DBAO{
     }
 
     public static function getInstance(){
-        if(is_null($this->_instance)){
-            $this->_instance = new UserTDG();
+        if(is_null(self::$_instance)){
+            self::$_instance = new UserTDG();
         }
-        return $this->_instance;
+        return self::$_instance;
     }
-    //create table
+
     public function createTable(){
 
         try{
