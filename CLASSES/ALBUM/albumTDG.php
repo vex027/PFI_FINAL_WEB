@@ -12,11 +12,11 @@ class AlbumTDG extends DBAO{
         $this->tableName = "album";
     }
 
-    public function getInstance(){
-        if(is_null($this->_instance)){
-            $this->_instance = new AlbumTDG();
+    public static function getInstance(){
+        if(is_null(self::$_instance)){
+            self::$_instance = new AlbumTDG();
         }
-        return $this->_instance;
+        return self::$_instance;
     }
     public function createTable(){
 

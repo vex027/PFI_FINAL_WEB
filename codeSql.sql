@@ -1,5 +1,4 @@
 use mysql;
-drop database webfinal if exists;
 create database if not exists webfinal;
 use webfinal;
 
@@ -9,7 +8,7 @@ userId integer(10) auto_increment primary key,
 username varchar(30) not null,
 email varchar(25) unique not null,
 password VARCHAR(250) NOT NULL,
-imageProfil LONGTEXT not null default 'Images_Profil\default.jpg'
+imageProfil varchar(500) not null default 'Images_Profil\default.jpg'
 );
 
 create table if not exists Album

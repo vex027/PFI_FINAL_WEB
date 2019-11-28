@@ -41,7 +41,7 @@ class Album{
     }
 
     public function load_album($id){
-        $TDG = new AlbumTDG();
+        $TDG = AlbumTDG::get_instance();
         $res = $TDG->get_by_id($id);
     
         if(!$res)
@@ -85,7 +85,7 @@ class Album{
 
         $this->description = $description;
 
-        $TDG = new AlbumTDG();
+        $TDG = AlbumTDG::get_instance();
         $res = $TDG->update_description($albumID);
 
         $TDG = null;
