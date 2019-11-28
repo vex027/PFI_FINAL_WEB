@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . "/userTDG.PHP";
+include_once __DIR__ . "/imageTDG.PHP";
 
 class Image{
 
