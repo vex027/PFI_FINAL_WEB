@@ -30,7 +30,7 @@ class CommentaireTDG extends DBAO{
             typeCom char(3) constraint type_commentaire check(type = 'IMG' or type = 'ALB'),
             dateCreation date not null,
             contenu LONGTEXT not null,
-            parentID integer(10),
+            parentID integer(10) not null,
             )";
             $stmt = $conn->prepare($query);
             $stmt->execute();
@@ -75,7 +75,7 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT commentaireId,typeCom, email, imageProfile FROM $tableName WHERE userID=:id";
+            $query = "SELECT * FROM $tableName WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -92,38 +92,15 @@ class CommentaireTDG extends DBAO{
         return $result;
     }
 
-
-    public function get_by_email($email){
-
-        try{
-            $conn = $this->connect();
-            $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE email=:email";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetch();
-        }
-
-        catch(PDOException $e)
-        {
-            echo "Error: " . $e->getMessage();
-        }
-
-        $conn = null;
-        return $result;
-    }
-
-
-    public function get_by_username($username){
+    public function get_all_commentaire_albumId($limite,$albumid){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName WHERE username=:username";
+            $query = "SELECT * FROM $tableNam where parentID = :albumID and typeCom = 'ALB' order by dateCreation limit :limite";
+            $stmt->bindParam(':albumID', $albumid);
+            $stmt->bindParam(':password', $limite);
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':username', $username);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
@@ -133,18 +110,18 @@ class CommentaireTDG extends DBAO{
         {
             echo "Error: " . $e->getMessage();
         }
-
         $conn = null;
         return $result;
     }
 
-
-    public function get_all_users(){
+    public function get_all_commentaire_imageId($limite,$albumid){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT userId, username, email,imageProfile FROM $tableName";
+            $query = "SELECT * FROM $tableNam where parentID = :albumID and typeCom = 'IMG' order by dateCreation limit :limite";
+            $stmt->bindParam(':albumID', $albumid);
+            $stmt->bindParam(':password', $limite);
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -160,16 +137,17 @@ class CommentaireTDG extends DBAO{
     }
 
 
-    public function add_user($email, $username, $password ){ // password déja hash
+    public function add_commentaire($typeCom, $contenu, $parentID){ // password déja hash
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "INSERT INTO $tableName (email, username, password) VALUES (:email, :username, :password)";
+            $query = "INSERT INTO $tableName (typeCom,dateCreation,contenu,parentID) VALUES (:typecom , :dateDreation , :contenu, :parentID)";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':typeCom', $typeCom);
+            $stmt->bindParam(':dateCreation', date("Y-m-d"));
+            $stmt->bindParam(':contenu', $contenu);
+            $stmt->bindParam(':parentID', $parentID);
             $stmt->execute();
             $resp =  true;
         }
@@ -182,15 +160,14 @@ class CommentaireTDG extends DBAO{
         return $resp;
     }
 
-    public function update_info($email, $username, $id){
+    public function update_contenu($contenu,$id){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET email=:email, username=:username WHERE userId=:id";
+            $query = "UPDATE $tableName SET contenu=:contenu WHERE userId=:id";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':contenu', $contenu);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $resp = true;
@@ -203,49 +180,4 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $resp;
     }
-
-    public function update_password($NHP, $id){
-
-        try{
-            $conn = $this->connect();
-            $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET password=:password WHERE userId=:id";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':password', $NHP);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            $resp = true;
-        }
-
-        catch(PDOException $e)
-        {
-            $resp = false;
-        }
-
-        $conn = null;
-        return $resp;
-    }
-
-    public function update_image($id, $imageProfile){
-
-        try{
-            $conn = $this->connect();
-            $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET imageProfil= :imageProfil WHERE userId=:id";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':imageProfil', $imageProfile);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            $resp = true;
-        }
-
-        catch(PDOException $e)
-        {
-            $resp = false;
-        }
-
-        $conn = null;
-        return $resp;
-    }
-
 }
