@@ -3,19 +3,16 @@ include_once __DIR__ . "/userTDG.PHP";
 
 class User{
 
-    private $userId;   
+    private $userID;   
     private $username;
     private $email;
     private $password;
     private $imageProfile;
     
-    public function __construct(){
+    public function __construct(){}
 
-    }
-
-    //getters
     public function get_id(){
-        return $this->userId;
+        return $this->userID;
     }
 
     public function get_email(){
@@ -39,7 +36,6 @@ class User{
         return $this->imageProfile;
     }
 
-    //setters
     public function set_email($email){
         $this->email = $email;
     }
@@ -67,7 +63,7 @@ class User{
             return false;
         }
 
-        $this->userId = $res['userID'];
+        $this->userID = $res['userID'];
         $this->email = $res['email'];
         $this->username = $res['username'];
         $this->password = $res['password'];
@@ -86,7 +82,7 @@ class User{
             return false;
         }
 
-        $this->userId = $res['userID'];
+        $this->userID = $res['userID'];
         $this->email = $res['email'];
         $this->username = $res['username'];
         $this->password = $res['password'];
@@ -96,17 +92,12 @@ class User{
         return true;
     }
 
-
-    //Login Validation
     public function Login($email, $pw){
 
-        // Regarde si l'utilisateur existes deja
         if(!$this->load_user($email))
         {
             return false;
         }
-
-        // Regarde si le password est verifiable
         if(!password_verify($pw, $this->password))
         {
             return false;
@@ -115,7 +106,6 @@ class User{
         return true;
     }
 
-    //Register Validation
     public static function validate_email_not_exists($email){
         $TDG = UserTDG::getInstance();
         $res = $TDG->get_by_email($email);
@@ -151,6 +141,11 @@ class User{
             return false;
         }
 
+        if(!$this->validate_username_not_exists($username))
+        {
+            return false;
+        }
+
         $TDG = UserTDG::getInstance();
         $res = $TDG->add_user($email, $username, password_hash($pw, PASSWORD_DEFAULT));
         $TDG = null;
@@ -158,14 +153,12 @@ class User{
     }
 
     public function update_user_info($email, $newmail, $newname){
-
-
         if(!$this->load_user($email))
         {
           return false;
         }
 
-        if(empty($this->id) || empty($newmail) || empty($newname)){
+        if(empty($this->userID) || empty($newmail) || empty($newname)){
           return false;
         }
 
@@ -174,11 +167,16 @@ class User{
             return false;
         }
 
+        if(!$this->validate_username_not_exists($newname) && $this->username != $newname)
+        {
+            return false;
+        }
+
         $this->email = $newmail;
         $this->username = $newname;
 
         $TDG = UserTDG::getInstance();
-        $res = $TDG->update_info($this->email, $this->username, $this->id);
+        $res = $TDG->update_info($this->email, $this->username, $this->userID);
 
         if($res){
           $_SESSION["userName"] = $this->username;
@@ -189,17 +187,11 @@ class User{
         return $res;
     }
 
-    /*
-      @var: current $email, oldpw, new pw, newpw validation
-    */
     public function update_user_pw($email, $oldpw, $pw, $pwv){
-
-
         if(!$this->load_user($email))
         {
           return false;
         }
-
 
         if(empty($pw) || $pw != $pwv){
           return false;
@@ -219,7 +211,6 @@ class User{
         return $res;
     }
 
-
     public function update_user_image($email,$imageProfile){
         if(!$this->load_user($email))
         {
@@ -229,7 +220,7 @@ class User{
           return false;
         }
         $TDG = UserTDG::getInstance();
-        $res = $TDG->update_image($this->userId, $imageProfile);
+        $res = $TDG->update_image($this->userID, $imageProfile);
         $this->set_imageProfile($imageProfile);
         $TDG = null;
 

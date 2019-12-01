@@ -3,29 +3,25 @@ include_once __DIR__ . "/imageTDG.PHP";
 
 class Image{
 
-    private $imageId;
+    private $imageID;
     private $imageUrl;
-    private $parentID;
+    private $albumID;
     private $description;
     private $dateCreation;
     private $likes;
-    private $typeIMG;
 
-    public function __construct(){
-        
-    }
-
-    //getters
-    public function get_imageId(){
-        return $this->imageId;
+    public function __construct(){ }
+    
+    public function get_imageID(){
+        return $this->imageID;
     }
 
     public function get_imageUrl(){
         return $this->imageUrl;
     }
 
-    public function get_parentID(){
-        return $this->parentID;
+    public function get_albumID(){
+        return $this->albumID;
     }
 
     public function get_description(){
@@ -36,13 +32,16 @@ class Image{
         return $this->dateCreation;
     }
 
-    //setters
+    public function get_likes(){
+        return $this->likes;
+    }
+
     public function set_imageUrl($imageUrl){
         $this->imageUrl = $imageUrl;
     }
 
-    public function set_parentID($parentID){
-        $this->parentID = $parentID;
+    public function set_albumID($albumID){
+        $this->albumID = $albumID;
     }
 
     public function set_description($description){
@@ -52,13 +51,9 @@ class Image{
     public function set_dateCreation($dateCreation){
         $this->dateCreation = $dateCreation;
     }
-
-    /*
-        Quality of Life methods (Dans la langue de shakespear (ou QOLM pour les intimes))
-    */
-    public function load_image($imageId){
-        $TDG = new ImageTDG();
-        $res = $TDG->get_by_imageId($imageId);
+    public function load_image($imageID){
+        $TDG = ImageTDG::getinstance();
+        $res = $TDG->get_by_imageID($imageID);
 
         if(!$res)
         {
@@ -66,9 +61,9 @@ class Image{
             return false;
         }
 
-        $this->imageId = $res['imageId'];
+        $this->imageID = $res['imageID'];
         $this->imageUrl = $res['imageUrl'];
-        $this->parentID = $res['parentID'];
+        $this->albumID = $res['albumID'];
         $this->description = $res['description'];
         $this->dateCreation = $res['dateCreation'];
         $this->likes = $res['likes'];
@@ -78,28 +73,28 @@ class Image{
         return true;
     }
 
-    public function update_image_description($imageId, $description){
+    public function update_image_description($imageID, $description){
 
         //load user infos
-        if(!$this->load_image($imageId))
+        if(!$this->load_image($imageID))
         {
           return false;
         }
 
-        if(empty($this->imageId)){
+        if(empty($this->imageID)){
           return false;
         }
 
         $this->description = $description;
 
         $TDG = ImageTDG::getInstance(); // get instance -> voir albumTDG
-        $res = $TDG->update_description($this->imageId, $this->description); 
+        $res = $TDG->update_description($this->imageID, $this->description); 
 
         $TDG = null;
         return $res;
     }
 
-    public static function add_image($imageUrl, $parentID, $description, $dateCreation,$type)
+    public static function add_image($imageUrl, $albumID, $description, $dateCreation,$type)
     {
         
     }

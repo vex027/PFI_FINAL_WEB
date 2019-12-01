@@ -78,13 +78,7 @@ class Album{
         {
             return false;
         }
-
-        if(empty($description)){
-            return false;
-        }
-
         $this->description = $description;
-
         $TDG = AlbumTDG::get_instance();
         $res = $TDG->update_description($albumID);
 
