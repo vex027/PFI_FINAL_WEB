@@ -49,7 +49,7 @@ class Album{
             $TDG = null;
             return false;
         }
-        $this->albumID = $res['albumId'];
+        $this->albumID = $res['albumID'];
         $this->title = $res['title'];
         $this->authorID = $res['authorID'];
         $this->description = $res['description'];

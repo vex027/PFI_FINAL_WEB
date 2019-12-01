@@ -3,7 +3,6 @@
 include_once __DIR__ . "/../../UTILS/connector.php";
 
 class CommentaireTDG extends DBAO{
-
     private $tableName;
     private static $_instance = null;
 
@@ -24,7 +23,7 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "create table if not exists Commentaire
+            $query = "create table if not exists $tableName
             (
             commentaireID integer(10) auto_increment primary key,
             typeCom char(3) constraint type_commentaire check(type = 'IMG' or type = 'ALB'),
@@ -58,8 +57,6 @@ class CommentaireTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
-
         catch(PDOException $e)
         {
             $resp = false;
@@ -68,7 +65,6 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $resp;
     }
-
 
     public function get_by_id($id){
 
@@ -82,7 +78,6 @@ class CommentaireTDG extends DBAO{
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetch();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
@@ -97,7 +92,8 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableNam where parentID = :albumID and typeCom = 'ALB' order by dateCreation limit :limite";
+            $query = "SELECT * FROM $tableName where parentID = :albumID and typeCom = 'ALB' order by dateCreation limit :limite";
+            $stmt = $conn->prepare($query);
             $stmt->bindParam(':albumID', $albumid);
             $stmt->bindParam(':password', $limite);
             $stmt = $conn->prepare($query);
@@ -105,7 +101,6 @@ class CommentaireTDG extends DBAO{
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
@@ -119,7 +114,8 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableNam where parentID = :albumID and typeCom = 'IMG' order by dateCreation limit :limite";
+            $query = "SELECT * FROM $tableName where parentID = :albumID and typeCom = 'IMG' order by dateCreation limit :limite";
+            $stmt = $conn->prepare($query);
             $stmt->bindParam(':albumID', $albumid);
             $stmt->bindParam(':password', $limite);
             $stmt = $conn->prepare($query);
@@ -135,7 +131,6 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $result;
     }
-
 
     public function add_commentaire($typeCom, $contenu, $parentID){ // password déja hash
 
@@ -172,7 +167,6 @@ class CommentaireTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
         catch(PDOException $e)
         {
             $resp = false;
