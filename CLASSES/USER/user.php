@@ -30,8 +30,13 @@ class User{
         return $this->password;
     }
 
-    public function get_imagesProfile(){
-        return $this->$imageProfile;
+    public function get_imagesProfile()
+    {
+        if(!file_exists($this->imageProfile))
+        {
+            $this->update_user_image($this->email,"Images_Profil/default.jpg");
+        }
+        return $this->imageProfile;
     }
 
     //setters
@@ -71,6 +76,26 @@ class User{
         return true;
     }
 
+    public function load_user_username($username){
+        $TDG = UserTDG::getInstance();
+        $res = $TDG->get_by_username($username);
+
+        if(!$res)
+        {
+            $TDG = null;
+            return false;
+        }
+
+        $this->userId = $res['userID'];
+        $this->email = $res['email'];
+        $this->username = $res['username'];
+        $this->password = $res['password'];
+        $this->imageProfile =$res['imageProfil'];
+
+        $TDG = null;
+        return true;
+    }
+
 
     //Login Validation
     public function Login($email, $pw){
@@ -91,7 +116,7 @@ class User{
     }
 
     //Register Validation
-    public function validate_email_not_exists($email){
+    public static function validate_email_not_exists($email){
         $TDG = UserTDG::getInstance();
         $res = $TDG->get_by_email($email);
         $TDG = null;
@@ -99,7 +124,17 @@ class User{
         {
             return false;
         }
+        return true;
+    }
 
+    public static function validate_username_not_exists($username){
+        $TDG = UserTDG::getInstance();
+        $res = $TDG->get_by_username($username);
+        $TDG = null;
+        if($res)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -186,19 +221,15 @@ class User{
 
 
     public function update_user_image($email,$imageProfile){
-
-
         if(!$this->load_user($email))
         {
           return false;
         }
-
         if(empty($imageProfile)){
           return false;
         }
-
         $TDG = UserTDG::getInstance();
-        $res = $TDG->update_image($this->$id, $imageProfile);
+        $res = $TDG->update_image($this->userId, $imageProfile);
         $this->set_imageProfile($imageProfile);
         $TDG = null;
 
@@ -210,5 +241,14 @@ class User{
         $res = $TDG->get_by_id($id);
         $TDG = null;
         return $res["username"];
+    }
+
+    public static function user_exists($id)
+    {
+        $res = get_username_by_ID($id);
+        if($res ==null){
+            return false;
+        }
+        return true;
     }
 }

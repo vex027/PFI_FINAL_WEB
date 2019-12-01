@@ -5,9 +5,11 @@ class Image{
 
     private $imageId;
     private $imageUrl;
-    private $albumId;
+    private $parentID;
     private $description;
     private $dateCreation;
+    private $likes;
+    private $typeIMG;
 
     public function __construct(){
         
@@ -22,8 +24,8 @@ class Image{
         return $this->imageUrl;
     }
 
-    public function get_albumId(){
-        return $this->albumId;
+    public function get_parentID(){
+        return $this->parentID;
     }
 
     public function get_description(){
@@ -39,8 +41,8 @@ class Image{
         $this->imageUrl = $imageUrl;
     }
 
-    public function set_albumId($albumId){
-        $this->albumId = $albumId;
+    public function set_parentID($parentID){
+        $this->parentID = $parentID;
     }
 
     public function set_description($description){
@@ -66,9 +68,11 @@ class Image{
 
         $this->imageId = $res['imageId'];
         $this->imageUrl = $res['imageUrl'];
-        $this->albumId = $res['albumId'];
+        $this->parentID = $res['parentID'];
         $this->description = $res['description'];
         $this->dateCreation = $res['dateCreation'];
+        $this->likes = $res['likes'];
+        $this->type = $res['typeIMG'];
 
         $TDG = null;
         return true;
@@ -93,5 +97,10 @@ class Image{
 
         $TDG = null;
         return $res;
+    }
+
+    public static function add_image($imageUrl, $parentID, $description, $dateCreation,$type)
+    {
+        
     }
 }
