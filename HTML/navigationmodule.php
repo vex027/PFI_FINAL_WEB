@@ -5,7 +5,7 @@
             <a class="nav-link" href="DOMAINLOGIC/logout.dom.php">LOGOUT</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="myProfile.php?username='.$_SESSION["userName"].'">MY PROFILE</a>
+            <a class="nav-link" href="profile.php?username='.$_SESSION["userName"].'">MY PROFILE</a>
         </li>';
     }
     else{
@@ -35,7 +35,8 @@
                 echo $navLinks;
             ?>
             <li class="nav-item">
-                <a class="nav-link" href="album.php">ALBUMS</a>
+                <a class="nav-link" href="accueil.php">ALBUMS</a>
+                <span class="glyphicon glyphicon-search"></span>
             </li>
         </ul>
 

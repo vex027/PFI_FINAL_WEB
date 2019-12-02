@@ -20,11 +20,10 @@ class UserTDG extends DBAO{
     }
 
     public function createTable(){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "create table if not exists Usager
+            $query = "create table if not exists $tableName
             (
             userID integer(10) auto_increment primary key,
             username varchar(30) not null,
@@ -45,11 +44,7 @@ class UserTDG extends DBAO{
         $conn = null;
         return $resp;
     }
-
-
-    //drop table
     public function drop_table(){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -58,43 +53,34 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
-
         catch(PDOException $e)
         {
             $resp = false;
         }
-
         $conn = null;
         return $resp;
     }
 
-
     public function get_by_id($id){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT userId,username, email, imageProfile FROM $tableName WHERE userID=:id";
+            $query = "SELECT * FROM $tableName WHERE userID=:id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetch();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-
         $conn = null;
         return $result;
     }
 
-
     public function get_by_email($email){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -105,19 +91,16 @@ class UserTDG extends DBAO{
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetch();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-
         $conn = null;
         return $result;
     }
 
 
     public function get_by_username($username){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -126,31 +109,27 @@ class UserTDG extends DBAO{
             $stmt->bindParam(':username', $username);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetch();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
         }
-
         $conn = null;
         return $result;
     }
 
 
     public function get_all_users(){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT userId, username, email,imageProfile FROM $tableName";
+            $query = "SELECT * FROM $tableName";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();
         }
-
         catch(PDOException $e)
         {
             echo "Error: " . $e->getMessage();
@@ -161,7 +140,6 @@ class UserTDG extends DBAO{
 
 
     public function add_user($email, $username, $password ){ // password déja hash
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -173,7 +151,6 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp =  true;
         }
-
         catch(PDOException $e)
         {
             $resp =  false;
@@ -183,7 +160,6 @@ class UserTDG extends DBAO{
     }
 
     public function update_info($email, $username, $id){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -195,7 +171,6 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
         catch(PDOException $e)
         {
             $resp = false;
@@ -205,7 +180,6 @@ class UserTDG extends DBAO{
     }
 
     public function update_password($NHP, $id){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -216,18 +190,14 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
         catch(PDOException $e)
         {
             $resp = false;
         }
-
         $conn = null;
         return $resp;
     }
-
     public function update_image($id, $imageProfile){
-
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -238,12 +208,10 @@ class UserTDG extends DBAO{
             $stmt->execute();
             $resp = true;
         }
-
         catch(PDOException $e)
         {
             $resp = false;
         }
-
         $conn = null;
         return $resp;
     }

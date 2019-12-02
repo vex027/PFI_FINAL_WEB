@@ -1,15 +1,10 @@
 <?php
     session_start();
     include "UTILS/sessionhandler.php";
-
-    if(!validate_session())
-    {
-        header("Location: error.php?ErrorMSG=Not%20Logged%20in!");
-        die();
-    }
+    include "CLASSES/USER/user.php";
 
     $title = "Profile";
-    $module = "myprofileview.php";
+    $module = "profileview.php";
     $content = array();
     array_push($content, $module);
 

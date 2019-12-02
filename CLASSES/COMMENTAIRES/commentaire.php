@@ -30,7 +30,7 @@ class Commentaire{
     }
 
     public function get_parentID(){
-        return $this->$parentID;
+        return $this->parentID;
     }
 
     //setters
@@ -60,28 +60,14 @@ class Commentaire{
 
     public function update_commentaire_info($id, $contenu){
 
-
         if(!$this->load_Commentaire($id))
         {
           return false;
         }
 
-        if(empty($this->id)){
-          return false;
-        }
-
-
-
         $TDG = CommentaireTDG::getInstance();
         $res = $TDG->update_contenu($contenu,$id);
-
-        $this->contenu = $contenu;
-
-        if($res){
-          $_SESSION["userName"] = $this->username;
-          $_SESSION["userEmail"] = $this->email;
-        }
-
+        $this->contenu = $contenu;    
         $TDG = null;
         return $res;
     }

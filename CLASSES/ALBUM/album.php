@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/albumTDG.PHP";
-
+include_once "CLASSES/IMAGE/image.PHP";
 class Album{
 
     private $albumID;
@@ -49,11 +49,11 @@ class Album{
             $TDG = null;
             return false;
         }
-        $this->albumID = $res['albumId'];
-        $this->title = $res['title'];
+        $this->albumID = $res['albumID'];
+        $this->title = $res['titre'];
         $this->authorID = $res['authorID'];
         $this->description = $res['description'];
-        $this->date = $res['date'];
+        $this->date = $res['dateCreation'];
 
         $TDG = null;
         return true;
@@ -66,7 +66,7 @@ class Album{
             return false;
         }
 
-        $TDG = AlbumTDG::get_instance();
+        $TDG = AlbumTDG::get_Instance();
         $res = $TDG->add_album($title, $authorID, $description);
         $TDG = null;
         return true;
@@ -78,17 +78,51 @@ class Album{
         {
             return false;
         }
-
-        if(empty($description)){
-            return false;
-        }
-
         $this->description = $description;
-
-        $TDG = AlbumTDG::get_instance();
-        $res = $TDG->update_description($albumID);
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->update_description($description,$albumID);
 
         $TDG = null;
         return $res;
+    }
+
+    public function display_album()
+    {
+        $imageBackground = new Image();
+        $imageBackground->get_firstImagePosted($this->albumID);
+        $imageUrl = $imageBackground->get_imageUrl();
+
+        $titre = $this->title;
+        $description = $this->description;
+        $id = $this->albumID;
+
+        echo "<div class='card' style='width: 18rem;'>";
+        echo "<img class='card-img-top' src='$imageUrl'>";
+        echo "<div class='card-body'>";
+        echo "<a href='album.php?id=$id'> <h3 class='card-title'>$titre</h3> </a>";
+        echo "<p class='card-text'> $description </p>";
+        echo "</div>";
+        echo "</div>";
+    }
+
+    public static function list_all_albums()
+    {
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_all_albums();
+        $TDG = null;
+        return $res;
+    }
+
+    public static function create_album_list()
+    {
+        $albumList = array();
+        $albums = Album::list_all_albums();
+        foreach($albums as $res)
+        {
+            $album = new Album();
+            $album->load_album($res['albumID']);
+            array_push($albumList,$album);
+        }
+        return $albumList;
     }
 }
