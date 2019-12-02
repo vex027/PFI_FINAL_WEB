@@ -74,7 +74,6 @@ class Image{
     }
 
     public function update_image_description($imageID, $description){
-
         //load user infos
         if(!$this->load_image($imageID))
         {
