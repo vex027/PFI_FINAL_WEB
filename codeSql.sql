@@ -23,7 +23,7 @@ constraint FK_AUTHORID_ALBUM foreign key(authorID) references Users(userID)
 create table if not exists Image
 (
 imageID integer(10) auto_increment primary key,
-imageUrl LONGTEXT not null,
+imageUrl varchar(500) not null,
 albumID integer(10) not null,
 description longtext,
 dateCreation date not null,

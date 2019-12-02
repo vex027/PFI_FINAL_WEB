@@ -35,7 +35,7 @@
                 echo $navLinks;
             ?>
             <li class="nav-item">
-                <a class="nav-link" href="album.php">ALBUMS</a>
+                <a class="nav-link" href="accueil.php">ALBUMS</a>
                 <span class="glyphicon glyphicon-search"></span>
             </li>
         </ul>

@@ -12,7 +12,7 @@ class AlbumTDG extends DBAO{
         $this->tableName = "album";
     }
 
-    public static function getInstance(){
+    public static function get_Instance(){
         if(is_null(self::$_instance)){
             self::$_instance = new AlbumTDG();
         }
@@ -119,8 +119,8 @@ class AlbumTDG extends DBAO{
         return $result;
     }
 
-    public function get_all_albums(){
-
+    public function get_all_albums()
+    {
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
@@ -194,5 +194,25 @@ class AlbumTDG extends DBAO{
         }
         $conn = null;
         return $resp;
+    }
+
+    public function get_random_image_by_albumID()
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName WHERE albumID=:id";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
     }
 }

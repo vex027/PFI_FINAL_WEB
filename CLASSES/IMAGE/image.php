@@ -52,8 +52,8 @@ class Image{
         $this->dateCreation = $dateCreation;
     }
     public function load_image($imageID){
-        $TDG = ImageTDG::getinstance();
-        $res = $TDG->get_by_imageID($imageID);
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->get_by_id($imageID);
 
         if(!$res)
         {
@@ -87,7 +87,7 @@ class Image{
 
         $this->description = $description;
 
-        $TDG = ImageTDG::getInstance(); // get instance -> voir albumTDG
+        $TDG = ImageTDG::get_Instance(); // get instance -> voir albumTDG
         $res = $TDG->update_description($this->imageID, $this->description); 
 
         $TDG = null;
@@ -97,5 +97,13 @@ class Image{
     public static function add_image($imageUrl, $albumID, $description, $dateCreation,$type)
     {
         
+    }
+
+    public function get_firstImagePosted($albumID)
+    {
+        $tdg = ImageTDG::get_Instance();
+        $res = $tdg->get_firstImagePosted($albumID);
+        $this->load_image($res['imageID']);
+        return $res;
     }
 }

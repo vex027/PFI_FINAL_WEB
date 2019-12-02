@@ -2,7 +2,7 @@
 
 include_once __DIR__ . "/../../UTILS/connector.php";
 
-class AlbumTDG extends DBAO{
+class ImageTDG extends DBAO{
 
     private $tableName;
     private static $_instance = null;
@@ -12,7 +12,7 @@ class AlbumTDG extends DBAO{
         $this->tableName = "image";
     }
 
-    public static function getInstance(){
+    public static function get_Instance(){
         if(is_null(self::$_instance)){
             self::$_instance = new ImageTDG();
         }
@@ -180,5 +180,25 @@ class AlbumTDG extends DBAO{
         }
         $conn = null;
         return $resp;
+    }
+
+    public function get_firstImagePosted($albumID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName WHERE albumID=:id ORDER BY dateCreation LIMIT 1";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':id', $albumID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
     }
 }
