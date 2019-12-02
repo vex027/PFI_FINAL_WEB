@@ -1,5 +1,6 @@
 <?php
     include "../CLASSES/ALBUM/album.php";
+    include "../CLASSES/ALBUM/album.php"
     include __DIR__ . "/../UTILS/sessionhandler.php";
     session_start();
 
@@ -10,6 +11,7 @@
 
     if(isset($_FILES['firstPic']) && isset($_POST['titleAlbum'])){
 
+        $title = $_POST['titleAlbum'];
         $target_dir = "Images_Album/";
 
         $media_file_type = pathinfo($_FILES['firstPic']['name'] ,PATHINFO_EXTENSION);
@@ -39,7 +41,11 @@
 
         //create entry in database
         $album = new Album();
-        $album->add_album($_POST['titleAlbum'],$_SESSION['userID'],$_POST['description']);
+        $album->add_album($title,$_SESSION['userID'],$_POST['description']);
+        $album->load_album_title($title);
+
+        $image = new Image();
+        $image->add_image($url,$album->get_id(),$_POST['descriptionIMG']);
         //redirection
         $username = $_SESSION["userName"];
         header("Location: ../profile.php?username=$username");
