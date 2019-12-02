@@ -27,7 +27,7 @@ imageUrl varchar(500) not null,
 albumID integer(10) not null,
 description longtext,
 dateCreation date not null,
-likes int default 0,
+likes int default 0
 );
 
 create table if not exists Commentaire
