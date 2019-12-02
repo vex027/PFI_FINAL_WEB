@@ -74,7 +74,6 @@ class Image{
     }
 
     public function update_image_description($imageID, $description){
-
         //load user infos
         if(!$this->load_image($imageID))
         {
@@ -94,9 +93,16 @@ class Image{
         return $res;
     }
 
-    public static function add_image($imageUrl, $albumID, $description, $dateCreation,$type)
+    public static function add_image($imageUrl, $albumID, $description, $dateCreation)
     {
-        
+        if(empty($imageUrl) || empty($albumID) || empty($dateCreation))
+        {
+            return false;
+        }
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG-­>add_image($imageUrl, $albumID, $description, $dateCreation)
+        $TDG=null;
+        return true;
     }
 
     public function get_firstImagePosted($albumID)
@@ -105,5 +111,32 @@ class Image{
         $res = $tdg->get_firstImagePosted($albumID);
         $this->load_image($res['imageID']);
         return $res;
+    }
+
+    public static function list_images_by_albums($albumID)
+    {
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->get_by_albumId($albumID);
+        $TDG = null;
+        return $res;
+    }
+
+    public static function create_image_list()
+    {
+        $imageList = array();
+        $images = Image::list_images_by_albums();
+        foreach($images as $res)
+        {
+            $image = new Image();
+            $image->load_album($res['albumID']);
+            array_push($imageList,$image);
+        }
+        return $imageList;
+    }
+
+    public function display()
+    {
+
+
     }
 }
