@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/albumTDG.PHP";
-include_once "../IMAGE/image.PHP";
+include_once __DIR__ . "/../IMAGE/image.PHP";
 
 class Album{
 
@@ -81,7 +81,12 @@ class Album{
 
     public function add_album($title, $authorID, $description){
 
-        if(empty($tile) || empty($authorID) || empty($description))
+        if(empty($title) || empty($authorID))
+        {
+            return false;
+        }
+
+        if($this->load_album_title($title))
         {
             return false;
         }
@@ -116,11 +121,13 @@ class Album{
         $description = $this->description;
         $id = $this->albumID;
 
-        echo "<div class='card' style='width: 18rem;'>";
-        echo "<img class='card-img-top' src='$imageUrl'>";
+        echo "<div class='col-md-4'>";
+        echo "<div class='card mb-4'>";
+        echo "<img class='card-img-top img-fluid img-thumbnail' src='$imageUrl'>";
         echo "<div class='card-body'>";
         echo "<a href='album.php?id=$id'> <h3 class='card-title'>$titre</h3> </a>";
         echo "<p class='card-text'> $description </p>";
+        echo "</div>";
         echo "</div>";
         echo "</div>";
     }

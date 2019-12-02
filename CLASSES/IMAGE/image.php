@@ -67,7 +67,6 @@ class Image{
         $this->description = $res['description'];
         $this->dateCreation = $res['dateCreation'];
         $this->likes = $res['likes'];
-        $this->type = $res['typeIMG'];
 
         $TDG = null;
         return true;
@@ -95,12 +94,12 @@ class Image{
 
     public static function add_image($imageUrl, $albumID, $description)
     {
-        if(empty($imageUrl) || empty($albumID) || empty($dateCreation))
+        if(empty($imageUrl) || empty($albumID))
         {
             return false;
         }
         $TDG = ImageTDG::get_Instance();
-        $res = $TDG-­>add_image($imageUrl, $albumID, $description)
+        $TDG->add_image($imageUrl,$albumID,$description);
         $TDG=null;
         return true;
     }
@@ -113,7 +112,7 @@ class Image{
         return $res;
     }
 
-    public static function list_images_by_albums($albumID)
+    /*/public static function list_images_by_albums($albumID)
     {
         $TDG = ImageTDG::get_Instance();
         $res = $TDG->get_by_albumId($albumID);
@@ -132,7 +131,7 @@ class Image{
             array_push($imageList,$image);
         }
         return $imageList;
-    }
+    }*/
 
     public function display()
     {

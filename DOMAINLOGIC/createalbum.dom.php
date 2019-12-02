@@ -17,10 +17,7 @@
     
         $img_extensions_arr = array("jpg","jpeg","png","gif");
 
-        if(in_array($media_file_type, $img_extensions_arr)){
-            $type = "image";
-            echo "image";
-        }else{
+        if(!in_array($media_file_type, $img_extensions_arr)){
             header("Location: ../error.php?Invalid file type");
             die();
         }
@@ -46,7 +43,7 @@
         $image = new Image();
         $image->add_image($url,$album->get_id(),$_POST['descriptionIMG']);
         //redirection
-        header("Location: ../album.php");
+        header("Location: ../accueil.php");
         die();
     }
 ?>

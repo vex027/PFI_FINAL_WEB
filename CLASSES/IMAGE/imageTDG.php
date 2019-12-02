@@ -126,6 +126,7 @@ class ImageTDG extends DBAO{
     public function add_image($imageUrl, $albumID, $description){
 
         try{
+            $date = date("Y-m-d");
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (imageUrl, albumID, description, dateCreation) VALUES (:imageUrl, :albumID, :description, :dateCreation)";
@@ -133,7 +134,7 @@ class ImageTDG extends DBAO{
             $stmt->bindParam(':imageUrl', $imageUrl);
             $stmt->bindParam(':albumID', $albumID);
             $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':dateCreation', date("Y-m-d"));
+            $stmt->bindParam(':dateCreation', $date);
             $stmt->execute();
             $resp =  true;
         }

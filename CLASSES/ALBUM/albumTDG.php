@@ -139,8 +139,8 @@ class AlbumTDG extends DBAO{
     }
 
     public function add_album($title, $authorID, $description){
-
         try{
+            $date = date("Y-m-d");
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (titre, authorId, description,dateCreation) VALUES (:titre, :authorID, :description, :date)";
@@ -148,7 +148,7 @@ class AlbumTDG extends DBAO{
             $stmt->bindParam(':titre', $title);
             $stmt->bindParam(':authorID', $authorID);
             $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':date', date("Y-m-d"));
+            $stmt->bindParam(':date', $date);
             $stmt->execute();
             $resp =  true;
         }
@@ -167,7 +167,7 @@ class AlbumTDG extends DBAO{
             $query = "UPDATE $tableName SET description = :description where albumID = :id";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':id', $albumId);
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $resp =  true;
         }
