@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/albumTDG.PHP";
-include_once "CLASSES/IMAGE/image.PHP";
+include_once  __DIR__ ."../IMAGE/image.PHP";
 class Album{
 
     private $albumID;
