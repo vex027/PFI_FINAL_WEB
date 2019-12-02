@@ -89,7 +89,7 @@ class AlbumTDG extends DBAO{
             $stmt->bindParam(':titre', $title);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetch();
         }
         catch(PDOException $e)
         {
