@@ -51,7 +51,5 @@
               <button class="btn btn-success mb-sm-3" type="submit">Change Password</button>
             </form>
           </div>
-
-
     </div>
 </div>
