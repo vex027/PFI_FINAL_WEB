@@ -17,7 +17,7 @@ titre varchar(60) not null,
 authorID integer(10) not null,
 description LONGTEXT,
 dateCreation date not null,
-constraint FK_AUTHORID_ALBUM foreign key(authorID) references Usager(userID)
+constraint FK_AUTHORID_ALBUM foreign key(authorID) references Users(userID)
 );
 
 create table if not exists Image
