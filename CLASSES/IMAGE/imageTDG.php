@@ -123,7 +123,7 @@ class ImageTDG extends DBAO{
         return $result;
     }
 
-    public function add_image($imageUrl, $albumID, $description, $dateCreation){
+    public function add_image($imageUrl, $albumID, $description){
 
         try{
             $conn = $this->connect();
@@ -133,7 +133,7 @@ class ImageTDG extends DBAO{
             $stmt->bindParam(':imageUrl', $imageUrl);
             $stmt->bindParam(':albumID', $albumID);
             $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':dateCreation', $dateCreation);
+            $stmt->bindParam(':dateCreation', date("Y-m-d"));
             $stmt->execute();
             $resp =  true;
         }

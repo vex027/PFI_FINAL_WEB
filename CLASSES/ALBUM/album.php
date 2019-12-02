@@ -59,6 +59,25 @@ class Album{
         return true;
     }
 
+    public function load_album_title($title){
+        $TDG = AlbumTDG::get_instance();
+        $res = $TDG->get_by_title($title);
+    
+        if(!$res)
+        {
+            $TDG = null;
+            return false;
+        }
+        $this->albumID = $res['albumID'];
+        $this->title = $res['titre'];
+        $this->authorID = $res['authorID'];
+        $this->description = $res['description'];
+        $this->date = $res['dateCreation'];
+
+        $TDG = null;
+        return true;
+    }
+
     public function add_album($title, $authorID, $description){
 
         if(empty($tile) || empty($authorID) || empty($description))
@@ -124,5 +143,14 @@ class Album{
             array_push($albumList,$album);
         }
         return $albumList;
+    }
+
+    public static list_albums_by_authorID($authorID)
+    {
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_all_albums();
+        $TDG = null;
+        return $res;
+
     }
 }

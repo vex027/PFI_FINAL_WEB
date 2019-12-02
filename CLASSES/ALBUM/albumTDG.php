@@ -89,7 +89,7 @@ class AlbumTDG extends DBAO{
             $stmt->bindParam(':titre', $title);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetch();
         }
         catch(PDOException $e)
         {
@@ -143,11 +143,12 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "INSERT INTO $tableName (titre, authorId, description) VALUES (:titre, :authorID, :description)";
+            $query = "INSERT INTO $tableName (titre, authorId, description,dateCreation) VALUES (:titre, :authorID, :description, :date)";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':titre', $title);
             $stmt->bindParam(':authorID', $authorID);
             $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':date', date("Y-m-d"));
             $stmt->execute();
             $resp =  true;
         }

@@ -13,7 +13,7 @@ imageProfil varchar(500) not null default 'Images_Profil/default.jpg'
 create table if not exists Album
 (
 albumID integer(10) auto_increment primary key,
-titre varchar(60) not null,
+titre varchar(60) not null UNIQUE,
 authorID integer(10) not null,
 description LONGTEXT,
 dateCreation date not null,
