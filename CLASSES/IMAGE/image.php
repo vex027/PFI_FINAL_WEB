@@ -93,14 +93,14 @@ class Image{
         return $res;
     }
 
-    public static function add_image($imageUrl, $albumID, $description, $dateCreation)
+    public static function add_image($imageUrl, $albumID, $description)
     {
         if(empty($imageUrl) || empty($albumID) || empty($dateCreation))
         {
             return false;
         }
         $TDG = ImageTDG::get_Instance();
-        $res = $TDG-­>add_image($imageUrl, $albumID, $description, $dateCreation)
+        $res = $TDG-­>add_image($imageUrl, $albumID, $description)
         $TDG=null;
         return true;
     }

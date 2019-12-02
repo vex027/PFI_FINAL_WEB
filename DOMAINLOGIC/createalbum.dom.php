@@ -1,6 +1,5 @@
 <?php
-    include "../CLASSES/ALBUM/album.php";
-    include "../CLASSES/ALBUM/album.php"
+    include __DIR__ . "/../CLASSES/ALBUM/album.php";
     include __DIR__ . "/../UTILS/sessionhandler.php";
     session_start();
 
@@ -47,8 +46,7 @@
         $image = new Image();
         $image->add_image($url,$album->get_id(),$_POST['descriptionIMG']);
         //redirection
-        $username = $_SESSION["userName"];
-        header("Location: ../profile.php?username=$username");
+        header("Location: ../album.php");
         die();
     }
 ?>

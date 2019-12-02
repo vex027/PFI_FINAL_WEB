@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/albumTDG.PHP";
-include_once "CLASSES/IMAGE/image.PHP";
+include_once "../IMAGE/image.PHP";
 class Album{
 
     private $albumID;
@@ -144,8 +144,8 @@ class Album{
         }
         return $albumList;
     }
-
-    public static list_albums_by_authorID($authorID)
+    
+    public static function list_albums_by_authorID($authorID)
     {
         $TDG = AlbumTDG::get_Instance();
         $res = $TDG->get_all_albums();
@@ -153,4 +153,5 @@ class Album{
         return $res;
 
     }
+    
 }
