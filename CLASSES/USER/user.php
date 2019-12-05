@@ -67,6 +67,27 @@ class User{
         $this->email = $res['email'];
         $this->username = $res['username'];
         $this->password = $res['password'];
+        $this->imageProfile = $res['imageProfil'];
+
+        $TDG = null;
+        return true;
+    }
+
+    public function load_user_id($id){
+        $TDG = UserTDG::getInstance();
+        $res = $TDG->get_by_id($id);
+
+        if(!$res)
+        {
+            $TDG = null;
+            return false;
+        }
+
+        $this->userID = $res['userID'];
+        $this->email = $res['email'];
+        $this->username = $res['username'];
+        $this->password = $res['password'];
+        $this->imageProfile = $res['imageProfil'];
 
         $TDG = null;
         return true;

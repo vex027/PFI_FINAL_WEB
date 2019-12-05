@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . "/albumTDG.PHP";
 include_once __DIR__ . "/../IMAGE/image.PHP";
+include_once __DIR__ . "/../USER/user.PHP";
 
 class Album{
 
@@ -117,16 +118,28 @@ class Album{
         $imageBackground->get_firstImagePosted($this->albumID);
         $imageUrl = $imageBackground->get_imageUrl();
 
+        $author = new User();
+        $author->load_user_id($this->authorID);
+        $authorName = $author->get_username();
+        $authorProfilPic = $author->get_imagesProfile();
+
         $titre = $this->title;
         $description = $this->description;
         $id = $this->albumID;
+        $date =$this->date;
 
         echo "<div class='col-md-4'>";
-        echo "<div class='card mb-4'>";
+        echo "<div class='card mb-4 text-white bg-dark'>";
         echo "<img class='card-img-top img-fluid img-thumbnail' src='$imageUrl'>";
+        echo "<div class='card-header'>";
+        echo "<a href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
+        echo "</div>";
         echo "<div class='card-body'>";
-        echo "<a href='album.php?id=$id'> <h3 class='card-title'>$titre</h3> </a>";
         echo "<p class='card-text'> $description </p>";
+        echo "</div>";
+        echo "<div class='card-footer'>";
+        echo "<p class='card-text'><small class='text-muted'>By $authorName | $date </small></p>";
+        echo "<img src='$authorProfilPic' style='width:20%;height:35%'>";
         echo "</div>";
         echo "</div>";
         echo "</div>";

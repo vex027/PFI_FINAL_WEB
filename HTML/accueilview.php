@@ -4,7 +4,7 @@
     {
         echo "<a class='btn btn-success' href='createalbum.php'> Create Album</a>";
     }
-    echo "<div class='row'>";
-    include "albumlistview.php";
-    echo "</div>";
 ?>
+<div class='card-group'>
+    <?php include "albumlistview.php"?>;
+</div>
