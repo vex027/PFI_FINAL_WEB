@@ -112,7 +112,28 @@ class Image{
         return $res;
     }
 
-    /*/public static function list_images_by_albums($albumID)
+
+    public function get_description_by_image($imageID){
+
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT description FROM $tableName WHERE imageID=:imageID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageID', $imageID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+    
+    public static function list_images_by_albums($albumID)
     {
         $TDG = ImageTDG::get_Instance();
         $res = $TDG->get_by_albumId($albumID);
@@ -120,22 +141,31 @@ class Image{
         return $res;
     }
 
-    public static function create_image_list()
+    public static function create_image_list($albumID)
     {
         $imageList = array();
-        $images = Image::list_images_by_albums();
+        $images = Image::list_images_by_albums($albumID);
         foreach($images as $res)
         {
             $image = new Image();
-            $image->load_album($res['albumID']);
+            $image->load_image($res['imageID']);
             array_push($imageList,$image);
         }
         return $imageList;
-    }*/
+
+    }
 
     public function display()
     {
-
-
+        echo "<div class='col-md-4'>";
+        echo "<div class='card mb-4'>";
+        echo "<div class='card-body'>";
+        echo "<a href='image.php?id=$this->imageID'>
+        <img class='card-img-top img-fluid img-thumbnail' src='$this->imageUrl'></a>";
+        echo "<p class='card-text'> $this->description </p>";
+        echo "<p class='card-text'> $this->dateCreation </p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
     }
 }
