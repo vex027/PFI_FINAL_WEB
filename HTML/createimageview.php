@@ -18,6 +18,14 @@
             <label for="descriptionIMG">Description de l'image (facultatif): </label>
             <textarea class="form-control" name="descriptionIMG" id="descriptionIMG" rows="3" id="descriptionIMG"></textarea>     
         </div>
-        <button class="btn btn-success" type="submit">Ajouter un album</button>
+        <?php  
+            if(!validate_session()){
+                header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");
+                die();
+            }
+            if($_SESSION["userID"] == $album->get_authorID()){
+                echo "<button class=\"btn btn-success\" type=\"submit\">Ajouter un image</button>";
+            } 
+        ?>      
     </form>
 </div>
