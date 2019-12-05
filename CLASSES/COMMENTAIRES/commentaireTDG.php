@@ -135,12 +135,13 @@ class CommentaireTDG extends DBAO{
     public function add_commentaire($typeCom, $contenu, $parentID){ // password déja hash
 
         try{
+            $date = date("Y-m-d");
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "INSERT INTO $tableName (typeCom,dateCreation,contenu,parentID) VALUES (:typecom , :dateDreation , :contenu, :parentID)";
+            $query = "INSERT INTO $tableName (typeCom,dateCreation,contenu,parentID) VALUES (:typeCom , :dateCreation , :contenu, :parentID)";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':typeCom', $typeCom);
-            $stmt->bindParam(':dateCreation', date("Y-m-d"));
+            $stmt->bindParam(':dateCreation', $date);
             $stmt->bindParam(':contenu', $contenu);
             $stmt->bindParam(':parentID', $parentID);
             $stmt->execute();
