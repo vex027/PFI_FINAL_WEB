@@ -1,7 +1,12 @@
 <?php
     session_start();
 
-    include "./CLASSES/COMMENTAIRES/commentaire.php";
+    if(!validate_session()){
+        header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");
+        die();
+    }
+
+    include __DIR__ . "../CLASSES/COMMENTAIRES/commentaire.php";
 
     $type = $_GET["type"];
     $id = $_GET["id"];
