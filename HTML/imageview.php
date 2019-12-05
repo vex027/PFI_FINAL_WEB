@@ -28,6 +28,13 @@
 
         echo "</div>";
         ?>
+        <form class method = "post" action = "./DOMAINLOGIC/image.dom.php?id=<?php echo $image->get_imageID()?>" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="commentaireIMG">Description de l'image (facultatif): </label>
+            <textarea class="form-control" name="commentaireIMG" id="commentaireIMG" rows="3" id="commentaireIMG"></textarea>     
+        </div>
+            <button class="btn btn-success" type="submit">Ajouter un commentaire</button>
+        </form>
     </div>
 </div>
 
