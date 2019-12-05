@@ -19,10 +19,13 @@
         //<!--Commentaire section  -->
         echo '<div div class="container border-top border-dark mb-sm 5">';
         //Affichage des commentaire
+        $commentaires = commentaire::create_commentaire_list($image->get_imageID());
         echo "<h2>Commentaire</h2>";
+            
 
         echo "</div>";
 
+        
         echo '<div div class="container border-top border-dark mb-sm 5">';
         //Affichage des commentaire
         echo "<h1>Ajouter un commentaire</h1>";
