@@ -10,7 +10,7 @@
 
     if(isset($_FILES['firstPic'])){
 
-        $title = $_POST['titleAlbum'];
+        $albumID = $_GET["id"];
         $target_dir = "Images_Album/";
 
         $media_file_type = pathinfo($_FILES['firstPic']['name'] ,PATHINFO_EXTENSION);
@@ -35,9 +35,9 @@
 
 
         $image = new Image();
-        $image->add_image($url,$_GET["id"],$_POST['descriptionIMG']);
+        $image->add_image($url,$albumID,$_POST['descriptionIMG']);
         //redirection
-        header("Location: ../accueil.php");
+        header("Location: ../album.php?id=$albumID");
         die();
     }
 ?>
