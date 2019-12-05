@@ -11,7 +11,7 @@ class CommentaireTDG extends DBAO{
         $this->tableName = "Commentaire";
     }
 
-    public static function getInstance(){
+    public static function get_Instance(){
         if(is_null(self::$_instance)){
             self::$_instance = new CommentaireTDG();
         }
@@ -95,7 +95,7 @@ class CommentaireTDG extends DBAO{
             $query = "SELECT * FROM $tableName where parentID = :albumID and typeCom = 'ALB' order by dateCreation limit :limite";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':albumID', $albumid);
-            $stmt->bindParam(':password', $limite);
+            $stmt->bindParam(':limite', $limite);
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -109,15 +109,15 @@ class CommentaireTDG extends DBAO{
         return $result;
     }
 
-    public function get_all_commentaire_imageId($limite,$albumid){
+    public function get_all_commentaire_imageId($limite,$imageId){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName where parentID = :albumID and typeCom = 'IMG' order by dateCreation limit :limite";
+            $query = "SELECT * FROM $tableName where parentID = :imageId and typeCom = 'IMG' order by dateCreation limit :limite";
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':albumID', $albumid);
-            $stmt->bindParam(':password', $limite);
+            $stmt->bindParam(':imageId', $imageId);
+            $stmt->bindParam(':limite', $limite);
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);

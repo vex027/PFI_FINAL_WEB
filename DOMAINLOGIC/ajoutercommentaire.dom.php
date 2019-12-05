@@ -1,4 +1,6 @@
 <?php
+    include __DIR__ . "/../UTILS/sessionhandler.php";
+    include __DIR__ . "/../CLASSES/COMMENTAIRES/commentaire.php";
     session_start();
 
     if(!validate_session()){
@@ -6,20 +8,27 @@
         die();
     }
 
-    include __DIR__ . "../CLASSES/COMMENTAIRES/commentaire.php";
+    
 
     $type = $_GET["type"];
     $id = $_GET["id"];
     $contenu = $_POST["commentaireIMG"];
 
     $commentaire = new Commentaire();
-    $commentaire->ajouter_commentaire($type,$contenu,$id)
+    
+    if($commentaire->ajouter_commentaire($type,$contenu,$id)){
+        header("Location: ../error.php?ErrorMSG=Echec%20creation%20commentaire!");
+        die();
+    }
 
-    if($type = "IMG"){
+
+
+    /
+    if($type == "IMG"){
         header("Location: ../image.php?id=$id");
         die();
     }
-    if($type = "ALB"){
+    if($type == "ALB"){
         header("Location: ../album.php?id=$id");
         die();
     }
