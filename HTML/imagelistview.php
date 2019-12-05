@@ -5,5 +5,5 @@
 
     foreach($imageList as $image){
         $image->display();
-    }
+	}
 ?>
