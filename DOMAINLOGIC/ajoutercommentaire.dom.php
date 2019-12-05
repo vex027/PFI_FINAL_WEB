@@ -16,14 +16,11 @@
 
     $commentaire = new Commentaire();
     
-    if($commentaire->ajouter_commentaire($type,$contenu,$id)){
-        header("Location: ../error.php?ErrorMSG=Echec%20creation%20commentaire!");
-        die();
+    if(!$commentaire->ajouter_commentaire($type,$contenu,$id)){
+       header("Location: ../error.php?ErrorMSG=Echec%20creation%20commentaire!");
+       die();
     }
-
-
-
-    /
+    
     if($type == "IMG"){
         header("Location: ../image.php?id=$id");
         die();
