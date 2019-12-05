@@ -8,7 +8,7 @@
         die();
     }
 
-    if(isset($_FILES['firstPic']) && isset($_POST['titleAlbum'])){
+    if(isset($_FILES['firstPic'])){
 
         $title = $_POST['titleAlbum'];
         $target_dir = "Images_Album/";
@@ -34,14 +34,8 @@
         move_uploaded_file($_FILES['firstPic']['tmp_name'], "../" . $url);
 
 
-
-        //create entry in database
-        $album = new Album();
-        $album->add_album($title,$_SESSION['userID'],$_POST['description']);
-        $album->load_album_title($title);
-
         $image = new Image();
-        $image->add_image($url,$album->get_id(),$_POST['descriptionIMG']);
+        $image->add_image($url,$_GET["id"],$_POST['descriptionIMG']);
         //redirection
         header("Location: ../accueil.php");
         die();
