@@ -73,14 +73,15 @@ class Commentaire{
     }
 
     public function ajouter_commentaire($typeCom,$contenu,$parentID){
+        
         if(empty($typeCom) || empty($contenu) || empty($parentID))
         {
             return false;
         }
-
+        
         $TDG = CommentaireTDG::get_Instance();
         $res = $TDG->add_commentaire($typeCom, $contenu, $parentID);
         $TDG = null;
-        return true;
+        return $res;
     }
 }
