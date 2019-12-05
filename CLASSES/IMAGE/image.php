@@ -112,26 +112,25 @@ class Image{
         return $res;
     }
 
-    /*/public static function list_images_by_albums($albumID)
-    {
-        $TDG = ImageTDG::get_Instance();
-        $res = $TDG->get_by_albumId($albumID);
-        $TDG = null;
-        return $res;
-    }
+    public function get_description_by_image($imageID){
 
-    public static function create_image_list()
-    {
-        $imageList = array();
-        $images = Image::list_images_by_albums();
-        foreach($images as $res)
-        {
-            $image = new Image();
-            $image->load_album($res['albumID']);
-            array_push($imageList,$image);
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT description FROM $tableName WHERE imageID=:imageID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageID', $imageID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
         }
-        return $imageList;
-    }*/
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
 
     public function display()
     {
