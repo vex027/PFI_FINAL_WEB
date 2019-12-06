@@ -124,22 +124,18 @@ class Album{
         $authorProfilPic = $author->get_imagesProfile();
 
         $titre = $this->title;
-        $description = $this->description;
         $id = $this->albumID;
         $date =$this->date;
 
-        echo "<div class='col-md-4'>";
-        echo "<div class='card mb-4 text-white bg-dark'>";
-        echo "<img class='card-img-top img-fluid img-thumbnail' src='$imageUrl'>";
+        echo "<div class='col-sm-4 text-left'>";
+        echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
-        echo "<a href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
+        echo "<a class='text-decoration-none' href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
         echo "</div>";
-        echo "<div class='card-body'>";
-        echo "<p class='card-text'> $description </p>";
-        echo "</div>";
+        echo "<img class='card-img-top' src='$imageUrl'>";
         echo "<div class='card-footer'>";
-        echo "<p class='card-text'><small class='text-muted'>By $authorName | $date </small></p>";
-        echo "<img src='$authorProfilPic' style='width:20%;height:35%'>";
+        echo "<p class='card-text'><small class='text-muted'> By : <a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a> | Créé le $date </small></p>";
+        echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
         echo "</div>";
         echo "</div>";
         echo "</div>";

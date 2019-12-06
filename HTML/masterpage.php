@@ -9,6 +9,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php include "bootstrap.html";?>
         <title> <?php echo $title ?> </title>
+        <style>
+            .card-img-top {
+                max-height: 200px;
+                min-height: 150px;
+                object-fit: cover;
+            }
+
+            .card {
+                margin: 10px ;
+            }
+
+            a{
+                color:black;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <?php include "navigationmodule.php";?>

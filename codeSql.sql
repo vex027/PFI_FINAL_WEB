@@ -36,5 +36,6 @@ commentaireID integer(10) auto_increment primary key,
 typeCom char(3) not null,
 dateCreation date not null,
 contenu LONGTEXT not null,
-parentID integer(10)
+parentID integer(10),
+authorID integer(10)
 );

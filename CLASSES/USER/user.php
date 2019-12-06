@@ -255,12 +255,12 @@ class User{
         return $res["username"];
     }
 
-    public static function user_exists($id)
+   /* public static function user_exists($id)
     {
         $res = get_username_by_ID($id);
         if($res ==null){
             return false;
         }
         return true;
-    }
+    }*/
 }

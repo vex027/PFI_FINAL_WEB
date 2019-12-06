@@ -16,7 +16,7 @@
 
     $commentaire = new Commentaire();
     
-    if(!$commentaire->ajouter_commentaire($type,$contenu,$id)){
+    if(!$commentaire->ajouter_commentaire($type,$contenu,$id,$_SESSION['userID'])){
        header("Location: ../error.php?ErrorMSG=Echec%20creation%20commentaire!");
        die();
     }

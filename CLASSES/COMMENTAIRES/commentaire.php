@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/commentaireTDG.PHP";
-
+include_once __DIR__ . "/../USER/user.PHP";
 class Commentaire{
 
     private $commentaireID;   
@@ -8,6 +8,7 @@ class Commentaire{
     private $dateCreation;
     private $contenu;
     private $parentID;
+    private $authorID;
     
     public function __construct(){
     }
@@ -33,13 +34,17 @@ class Commentaire{
         return $this->parentID;
     }
 
+    public function get_authorID(){
+        return $this->authorID;
+    }
+
     //setters
     public function set_contenu($contenu){
         $this->contenu = $contenu;
     }
 
     public function load_Commentaire($id){
-        $TDG = CommentaireTDG::getInstance();
+        $TDG = CommentaireTDG::get_Instance();
         $res = $TDG->get_by_id($id);
 
         if(!$res)
@@ -53,6 +58,7 @@ class Commentaire{
         $this->dateCreation = $res['dateCreation'];
         $this->contenu = $res['contenu'];
         $this->parentID = $res['parentID'];
+        $this->authorID = $res['authorID'];
 
         $TDG = null;
         return true;
@@ -65,24 +71,79 @@ class Commentaire{
           return false;
         }
 
-        $TDG = CommentaireTDG::getInstance();
+        $TDG = CommentaireTDG::get_Instance();
         $res = $TDG->update_contenu($contenu,$id);
         $this->contenu = $contenu;    
         $TDG = null;
         return $res;
     }
 
-    public function ajouter_commentaire($typeCom,$contenu,$parentID){
+    public function ajouter_commentaire($typeCom,$contenu,$parentID,$authorID){
         
-        if(empty($typeCom) || empty($contenu) || empty($parentID))
+        if(empty($typeCom) || empty($contenu) || empty($parentID) || empty($parentID))
         {
             return false;
         }
         
         $TDG = CommentaireTDG::get_Instance();
-        $res = $TDG->add_commentaire($typeCom, $contenu, $parentID);
+        $res = $TDG->add_commentaire($typeCom, $contenu, $parentID,$authorID);
         $TDG = null;
         return $res;
     }
 
+    public static function list_commentaire_by_imageID($imageID,$limite)
+    {
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_all_commentaire_imageId($imageID,$limite);
+        $TDG = null;
+        return $res;
+    }
+
+    public static function list_commentaire_by_albumID($albumID,$limite)
+    {
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_all_commentaire_albumId($albumID,$limite);
+        $TDG = null;
+        return $res;
+    }
+
+    public static function create_commentaire_list_album($albumID,$limite)
+    {
+        $commentaireList = array();
+        $commentaires = Commentaire::list_commentaire_by_albumID($albumID,$limite);
+        foreach($commentaires as $res)
+        {
+            $commentaire = new Commentaire();
+            $commentaire->load_Commentaire($res['commentaireID']);
+            array_push($commentaireList,$commentaire);
+        }
+        return $commentaireList;
+    }
+
+    public static function create_commentaire_list_image($imageID,$limite)
+    {
+        $commentaireList = array();
+        $commentaires = Commentaire::list_commentaire_by_imageID($imageID,$limite);
+        foreach($commentaires as $res)
+        {
+            $commentaire = new Commentaire();
+            $commentaire->load_Commentaire($res['commentaireID']);
+            array_push($commentaireList,$commentaire);
+        }
+        return $commentaireList;
+    }
+
+    public function display()
+    {
+        $user = new User();
+        $user->load_user_id($this->authorID);
+        $profilPic = $user->get_imagesProfile();
+        $username = $user->get_username();
+        echo "<div class='card card-default text-left p-3'>";
+        echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";
+        echo "<div class='card-heading'><a href='profile.php?username=$username'><h4> $username </a><small><i>Posted on $this->dateCreation</i></small></h4></div>";
+        echo "<div class='card-body'>". $this->contenu . "</div>";
+        echo "</div>";
+  
+    }
 }

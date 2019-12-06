@@ -113,7 +113,7 @@ class Image{
     }
 
 
-    public function get_description_by_image($imageID){
+    /*public function get_description_by_image($imageID){
 
         try{
             $conn = $this->connect();
@@ -131,7 +131,7 @@ class Image{
         }
         $conn = null;
         return $result;
-    }
+    }*/
     
     public static function list_images_by_albums($albumID)
     {
@@ -162,7 +162,6 @@ class Image{
         echo "<div class='card-body'>";
         echo "<a href='image.php?id=$this->imageID'>
         <img class='card-img-top img-fluid img-thumbnail' src='$this->imageUrl'></a>";
-        echo "<p class='card-text'> $this->description </p>";
         echo "<p class='card-text'> $this->dateCreation </p>";
         echo "</div>";
         echo "</div>";
