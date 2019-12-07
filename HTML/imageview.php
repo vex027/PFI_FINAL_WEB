@@ -19,6 +19,9 @@
       });
 </script>
 <div class="container center mb-3" style="margin-top:30px">
+    <div>
+        <a class="btn btn-success" href='album.php?id=<?php echo $image->get_albumID()?>'>Retour a l'album</a>
+    </div>
     <?php
         $album = new Album();
         $imageID = $image->get_imageID();
