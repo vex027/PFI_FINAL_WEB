@@ -6,5 +6,5 @@
     }
 ?>
 <div class='row'>
-    <?php include "albumlistview.php"?>;
+    <?php include "albumlistview.php"?>
 </div>

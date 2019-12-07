@@ -27,7 +27,7 @@ imageUrl varchar(500) not null,
 albumID integer(10) not null,
 description longtext,
 dateCreation date not null,
-likes int default 0
+constraint FK_ALBUMID_IMAGE foreign key(albumID) references Album(albumID)
 );
 
 create table if not exists Commentaire
@@ -37,5 +37,33 @@ typeCom char(3) not null,
 dateCreation date not null,
 contenu LONGTEXT not null,
 parentID integer(10),
-authorID integer(10)
+authorID integer(10),
+constraint FK_AUTHORID_COMMENT foreign key(authorID) references Users(userID)
+);
+
+create table if not exists User_Albums_Likes
+(
+userID integer(10),
+albumID integer(10),
+constraint FK_USERID foreign key(userID) references Users(userID),
+constraint FK_ALBUMID foreign key(albumID) references Album(albumID),
+constraint PK_USERID_ALBUMID primary key (userID,albumID)
+);
+
+create table if not exists User_Images_Likes
+(
+userID integer(10),
+imageID integer(10),
+constraint FK_USERID foreign key(userID) references Users(userID),
+constraint FK_IMAGEMID foreign key(imageID) references Image(imageID),
+constraint PK_USERID_IMAGEID primary key (userID,imageID)
+);
+
+create table if not exists User_Comments_Likes
+(
+userID integer(10),
+commentID integer(10),
+constraint FK_USERID foreign key(userID) references Users(userID),
+constraint FK_COMMENTID foreign key(commentID) references Commentaire(commentaireID),
+constraint PK_USERID_COMMENTID primary key (userID,commentID)
 );

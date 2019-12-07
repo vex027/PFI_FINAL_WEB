@@ -191,4 +191,29 @@ class Album{
         return $res;
 
     }
+
+    public function get_likes($albumID)
+    {
+        if(!$this->load_album($albumID))
+        {
+          return false;
+        }
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_likes_number($albumID); 
+        $TDG = null;
+        return $res; 
+    }
+
+    public function add_like($userID,$albumID)
+    {
+        if(empty($userID) || empty($albumID))
+        {
+            return false;
+        }
+        
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->add_like($albumID,$userID);
+        $TDG = null;
+        return $res;
+    }
 }

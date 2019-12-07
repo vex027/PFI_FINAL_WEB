@@ -171,4 +171,44 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $resp;
     }
+
+    public function get_likes_number($commentID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Comments_Likes";
+            $query = "SELECT COUNT(:commentID) as likes FROM $tableName";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':commentID', $commentID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function add_like($commentID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Comments_Likes";
+            $query = "INSERT INTO $tableName VALUES (:userID, :commentID)";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':commentID', $commentID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
 }
