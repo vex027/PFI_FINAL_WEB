@@ -38,7 +38,7 @@
                 <a class="nav-link" href="accueil.php">ALBUMS</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="search.php">
+        <form method = "post" class="form-inline my-2 my-lg-0" action="search.php">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
             <button class="btn btn-outline-success my-2 my-sm-0 material-icons" type="submit">search</button>
         </form>

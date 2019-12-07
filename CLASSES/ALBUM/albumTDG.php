@@ -99,6 +99,27 @@ class AlbumTDG extends DBAO{
         return $result;
     }
 
+    public function get_like_title($title){
+
+        try{
+            $title = "%".$title."%";
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName WHERE titre like :titre";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':titre', $title);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
     public function get_by_authorID($id){
 
         try{

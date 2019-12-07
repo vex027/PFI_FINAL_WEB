@@ -112,7 +112,7 @@ class Album{
         return $res;
     }
 
-    public function display_album()
+    public function display_album() //Modifier pour pouvoir l'utiliser en search
     {
         $imageBackground = new Image();
         $imageBackground->get_firstImagePosted($this->albumID);
@@ -127,7 +127,7 @@ class Album{
         $id = $this->albumID;
         $date =$this->date;
 
-        echo "<div class='col-sm-4 text-left'>";
+        
         echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
         echo "<a class='text-decoration-none' href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
@@ -138,13 +138,21 @@ class Album{
         echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
         echo "</div>";
         echo "</div>";
-        echo "</div>";
+        
     }
 
     public static function list_all_albums()
     {
         $TDG = AlbumTDG::get_Instance();
         $res = $TDG->get_all_albums();
+        $TDG = null;
+        return $res;
+    }
+
+    public static function list_all_albums_like_title($title)
+    {
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_like_title($title);
         $TDG = null;
         return $res;
     }
@@ -161,7 +169,20 @@ class Album{
         }
         return $albumList;
     }
-    
+
+    public static function create_album_list_like_title($title)
+    {
+        $albumList = array();
+        $albums = Album::list_all_albums_like_title($title);
+        foreach($albums as $res)
+        {
+            $album = new Album();
+            $album->load_album($res['albumID']);
+            array_push($albumList,$album);
+        }
+        return $albumList;
+    }
+
     public static function list_albums_by_authorID($authorID)
     {
         $TDG = AlbumTDG::get_Instance();
@@ -170,5 +191,4 @@ class Album{
         return $res;
 
     }
-    
 }
