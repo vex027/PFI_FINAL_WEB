@@ -38,6 +38,6 @@
       header("Location: ../error.php?ErrorMSG=invalid%20request");
       die();
     }
-    header("Location: ../album.php");
+    header("Location: ../profile.php?username=$username");
     die();
 ?>
