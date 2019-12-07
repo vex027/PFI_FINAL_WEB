@@ -173,6 +173,13 @@ class Image{
         echo "</div>";
     }
 
+    public function get_authorID()
+    {
+        $album = new Album();
+        $album->load_album($this->albumID);
+        return $album->get_authorID();
+    }
+
 
     public function get_likes()
     {
