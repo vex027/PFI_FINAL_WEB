@@ -191,6 +191,26 @@ class CommentaireTDG extends DBAO{
         return $resp;
     }
 
+    public function delete_commentaire($commentaireID){
+        try{
+            $date = date('Y-m-d h:i:s');
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "DELETE FROM $tableName where commentaireID = :commentaireID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':commentaireID', $commentaireID);
+            $stmt->execute();
+            $resp =  true;
+        }
+
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
+
     public function update_contenu($contenu,$id){
 
         try{
