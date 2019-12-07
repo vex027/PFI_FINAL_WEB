@@ -263,4 +263,32 @@ class User{
         }
         return true;
     }*/
+    public static function list_all_user_like_username($username)
+    {
+        $TDG = UserTDG::getInstance();
+        $res = $TDG->get_like_username($username);
+        $TDG = null;
+        return $res;
+    }
+    public static function create_user_list_like_username($username)
+    {
+        $userList = array();
+        $users = User::list_all_user_like_username($username);
+        foreach($users as $res)
+        {
+            $user = new User();
+            $user->load_user($res['userID']);
+            array_push($userList,$user);
+        }
+        return $userList;
+    }
+
+    public function display_user(){
+        echo "<div class='card bg-light'>";
+        echo "<div class='card-footer'>";
+        echo "<p class='card-text'><a class='text-decoration-none' href='profile.php?username=$username'>$username</a></p>";
+        echo "<a href='profile.php?username=$this->getusername'><img src='$imagesProfile' class='img-thumbnail' style='width:20%;height:60%'></a>";
+        echo "</div>";
+        echo "</div>";
+    }
 }
