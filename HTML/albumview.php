@@ -1,14 +1,15 @@
 <div class="container">
     <?php 
-    
+        $album = new Album();
+        $album->load_album($_GET['id']);
+        $albumID = $album->get_id();
         if(validate_session())
         {
-            $album = new Album();
-            $album->load_album($_GET['id']);
-            $albumID = $album->get_id();
-            if($_SESSION['userID'] ==$album->get_authorID())
-            {
-                echo "<a class='btn btn-success' href='createimage.php?id=$albumID'>Create Image</a>";
+            if(isset($_SESSION['userID'])){
+                if($_SESSION['userID'] ==$album->get_authorID())
+                {
+                    echo "<a class='btn btn-success' href='createimage.php?id=$albumID'>Create Image</a>";
+                }
             }
         } 
     ?>
