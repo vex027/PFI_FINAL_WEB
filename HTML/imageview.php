@@ -27,7 +27,7 @@
         <!--Upvote arrow & nb de UpVotes  -->
         <div class="d-flex flex-row bd-highlight border-top border-dark mb-sm 5">
             <div class="p-2 bd-highlight  border-right border-dark mb-sm 5">
-                <form method = "post" action = "DOMAINLOGIC/like.dom.php">
+                <form method = "post" action = "DOMAINLOGIC/likeImage.dom.php">
                     <button id="like-image-btn" class="fas fa-arrow-alt-circle-up btn" name='imageID' value='<?php echo $image->get_imageID()?>'></button>
                 </form>
             </div>

@@ -46,11 +46,11 @@
     <div>
         <div class="d-flex flex-row bd-highlight border-top border-right border-dark mb-sm 5">
             <div class="p-2 bd-highlight border-left border-right border-dark mb-sm 5">
-                <form method = "post" action = "DOMAINLOGIC/like.dom.php">
-                    <button id="like-image-btn" class="fas fa-arrow-alt-circle-up btn" name='imageID' value='<?php echo $albumID?>'></button>
+                <form method = "post" action = "DOMAINLOGIC/likeAlbum.dom.php">
+                    <button id="like-album-btn" class="fas fa-arrow-alt-circle-up btn" name='albumID' value='<?php echo $albumID?>'></button>
                 </form>
             </div>
-            <div id="like-image-counter" class="p-2 bd-highlight border-right border-dark mb-sm 5"> <?php echo $albumID ?></div>
+            <div id="like-album-counter" class="p-2 bd-highlight border-right border-dark mb-sm 5"> <?php echo $album->get_likes() ?></div>
         </div>
         
         <!--Commentaire section  -->      

@@ -193,16 +193,16 @@ class Album{
 
     }
 
-    public function get_likes($albumID)
+    public function get_likes()
     {
-        if(!$this->load_album($albumID))
+        if(!$this->load_album($this->albumID))
         {
           return false;
         }
         $TDG = AlbumTDG::get_Instance();
-        $res = $TDG->get_likes_number($albumID); 
+        $res = $TDG->get_likes_number($this->albumID); 
         $TDG = null;
-        return $res; 
+        return $res['likes']; 
     }
 
     public function add_like($userID,$albumID)
