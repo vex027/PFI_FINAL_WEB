@@ -129,7 +129,7 @@ class CommentaireTDG extends DBAO{
     public function add_commentaire($typeCom, $contenu, $parentID,$authorID){ 
 
         try{
-            $date = date("Y-m-d");
+            $date = date('Y-m-d h:i:s');
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (typeCom,dateCreation,contenu,parentID,authorID) VALUES (:typeCom , :dateCreation , :contenu, :parentID,:authorID)";

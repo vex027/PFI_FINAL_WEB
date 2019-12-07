@@ -151,11 +151,16 @@ class Image{
 
     public function display()
     {
+        $likes = $this->get_likes();
         echo "<div class='col-md-4'>";
         echo "<div class='card mb-4'>";
         echo "<div class='card-body'>";
         echo "<a href='image.php?id=$this->imageID'>
         <img class='card-img-top img-fluid img-thumbnail' src='$this->imageUrl'></a>";
+        echo "<div class='row'>";
+        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' disabled='true'></button>";
+        echo "<h4> $likes</h4>";
+        echo "</div>";
         echo "<p class='card-text'> $this->dateCreation </p>";
         echo "</div>";
         echo "</div>";

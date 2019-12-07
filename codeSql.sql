@@ -16,7 +16,7 @@ albumID integer(10) auto_increment primary key,
 titre varchar(60) not null UNIQUE,
 authorID integer(10) not null,
 description LONGTEXT,
-dateCreation date not null,
+dateCreation DATETIME not null,
 constraint FK_AUTHORID_ALBUM foreign key(authorID) references Users(userID)
 );
 
@@ -26,7 +26,7 @@ imageID integer(10) auto_increment primary key,
 imageUrl varchar(500) not null,
 albumID integer(10) not null,
 description longtext,
-dateCreation date not null,
+dateCreation DATETIME not null,
 constraint FK_ALBUMID_IMAGE foreign key(albumID) references Album(albumID)
 );
 
@@ -34,7 +34,7 @@ create table if not exists Commentaire
 (
 commentaireID integer(10) auto_increment primary key,
 typeCom char(3) not null,
-dateCreation date not null,
+dateCreation DATETIME not null,
 contenu LONGTEXT not null,
 parentID integer(10),
 authorID integer(10),
