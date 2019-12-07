@@ -1,8 +1,16 @@
 <?php  
     include "../CLASSES/ALBUM/album.php";
     include "../CLASSES/COMMENTAIRES/commentaire.php";
+
+    session_start();
+
     $album = new Album();
     $album->load_album($_POST["albumID"]);
+
+    if($_SESSION["userID"] != $album->get_authorID()){
+        header("Location: error.php?ErrorMSG=Not%20the%20author!");
+        die();
+    }
 
     $imageList = Image::create_image_list($album->get_id());
 
