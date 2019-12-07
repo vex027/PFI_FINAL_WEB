@@ -203,4 +203,44 @@ class ImageTDG extends DBAO{
         $conn = null;
         return $result;
     }
+
+    public function get_likes_number($imageID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Images_Likes";
+            $query = "SELECT COUNT(:imageID) as likes FROM $tableName";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageID', $imageID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function add_like($imageID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Images_Likes";
+            $query = "INSERT INTO $tableName VALUES (:userID, :imageID)";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':imageID', $imageID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
 }

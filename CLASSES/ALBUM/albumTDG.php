@@ -237,4 +237,45 @@ class AlbumTDG extends DBAO{
         $conn = null;
         return $result;
     }
+
+
+    public function get_likes_number($albumID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Albums_Likes";
+            $query = "SELECT COUNT(:albumID) as likes FROM $tableName";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function add_like($albumID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Albums_Likes";
+            $query = "INSERT INTO $tableName VALUES (:userID, :albumID)";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
 }

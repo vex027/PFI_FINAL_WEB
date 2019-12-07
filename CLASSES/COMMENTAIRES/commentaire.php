@@ -146,4 +146,29 @@ class Commentaire{
         echo "</div>";
   
     }
+
+    public function get_likes($commentaireID)
+    {
+        if(!$this->load_Commentaire($commentaireID))
+        {
+          return false;
+        }
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_likes_number($commentaireID); 
+        $TDG = null;
+        return $res; 
+    }
+
+    public function add_like($userID,$commentaireID)
+    {
+        if(empty($userID) || empty($commentaireID))
+        {
+            return false;
+        }
+        
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->add_like($commentaireID,$userID);
+        $TDG = null;
+        return $res;
+    }
 }

@@ -8,7 +8,6 @@ class Image{
     private $albumID;
     private $description;
     private $dateCreation;
-    private $likes;
 
     public function __construct(){ }
     
@@ -30,10 +29,6 @@ class Image{
 
     public function get_dateCreation(){
         return $this->dateCreation;
-    }
-
-    public function get_likes(){
-        return $this->likes;
     }
 
     public function set_imageUrl($imageUrl){
@@ -66,7 +61,6 @@ class Image{
         $this->albumID = $res['albumID'];
         $this->description = $res['description'];
         $this->dateCreation = $res['dateCreation'];
-        $this->likes = $res['likes'];
 
         $TDG = null;
         return true;
@@ -166,5 +160,31 @@ class Image{
         echo "</div>";
         echo "</div>";
         echo "</div>";
+    }
+
+
+    public function get_likes($imageID)
+    {
+        if(!$this->load_image($imageID))
+        {
+          return false;
+        }
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_likes_number($imageID); 
+        $TDG = null;
+        return $res; 
+    }
+
+    public function add_like($userID,$imageID)
+    {
+        if(empty($userID) || empty($imageID))
+        {
+            return false;
+        }
+        
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->add_like($imageID,$userID);
+        $TDG = null;
+        return $res;
     }
 }
