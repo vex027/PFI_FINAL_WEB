@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . "/imageTDG.PHP";
+include_once __DIR__ . "/../COMMENTAIRES/commentaire.PHP";
 
 class Image{
 
@@ -157,15 +158,26 @@ class Image{
 
     public function display()
     {
+        $nombreCommentaire = Commentaire::get_comments_number($this->imageID,'IMG');
         $likes = $this->get_likes();
         echo "<div class='col-md-4'>";
         echo "<div class='card mb-4'>";
+        if(validate_session()){
+            if($_SESSION['userID']==$this->get_authorID()){
+                echo "<div class='card-header'>";
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deleteimage.dom.php'>";
+                echo "<button class='btn btn-danger m-2' name='imageID' value='$this->imageID'><i class='material-icons'>delete_forever</i></button>";
+                echo "</form>";
+                echo "</div>";
+            }
+        }
         echo "<div class='card-body'>";
-        echo "<a href='image.php?id=$this->imageID'>
-        <img class='card-img-top img-fluid img-thumbnail' src='$this->imageUrl'></a>";
+        echo "<a href='image.php?id=$this->imageID'><img class='card-img-top img-fluid img-thumbnail' src='$this->imageUrl'></a>";
         echo "<div class='row'>";
-        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' disabled='true'></button>";
-        echo "<h4> $likes</h4>";
+        echo "<i class='fas fa-arrow-alt-circle-up p-2'></i>";
+        echo "<h4 class='p2'> $likes</h4>";
+        echo "<i class='fas fa-comment p-2'></i>";
+        echo "<h4>$nombreCommentaire</h4>";
         echo "</div>";
         echo "<p class='card-text'> $this->dateCreation </p>";
         echo "</div>";

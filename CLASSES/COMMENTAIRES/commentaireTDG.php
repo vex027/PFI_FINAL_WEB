@@ -270,4 +270,25 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $resp;
     }
+
+    public function get_comments_number($parentID,$type)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT COUNT(*) as nombre FROM $tableName where parentID = :parentID AND typeCom = :type";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':parentID', $parentID);
+            $stmt->bindParam(':type', $type);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
 }

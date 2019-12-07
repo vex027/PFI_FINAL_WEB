@@ -229,4 +229,12 @@ class Commentaire{
         $TDG = null;
         return $res;
     }
+
+    public static function get_comments_number($parentID,$type)
+    {
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_comments_number($parentID,$type); 
+        $TDG = null;
+        return $res['nombre']; 
+    }
 }

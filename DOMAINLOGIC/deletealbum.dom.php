@@ -1,7 +1,7 @@
 <?php  
     include "../CLASSES/ALBUM/album.php";
     include "../CLASSES/COMMENTAIRES/commentaire.php";
-
+    include "../CLASSES/IMAGE/image.php";
     session_start();
 
     $album = new Album();

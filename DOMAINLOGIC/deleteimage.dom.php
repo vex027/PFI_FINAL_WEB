@@ -1,12 +1,12 @@
 <?php
     
-    include "../CLASSES/ALBUM/album.php";
-    include "../CLASSES/COMMENTAIRES/commentaire.php";
+    include_once "../CLASSES/ALBUM/album.php";
+    include_once "../CLASSES/COMMENTAIRES/commentaire.php";
 
     session_start();
 
     $image = new Image();
-    $image->load_image($_GET["id"]);
+    $image->load_image($_POST["imageID"]);
     $album = new Album();
     $album->load_album($image->get_albumID());
 
@@ -28,6 +28,14 @@
     }
 
     $albumID = $image->get_albumID();
+
+    if($image->get_number_image_album($album->get_id())==0){
+        $commentaireList = Commentaire::create_commentaire_list_album_noLimit($albumID);
+        foreach($commentaireList as $com){
+            $com->delete_commentaire();
+        }
+        $album->delete_album();
+    }
 
     header("Location: ../album.php?id=$albumID");
     die();

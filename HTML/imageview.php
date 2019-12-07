@@ -1,7 +1,7 @@
 <?php
 
-    include "./CLASSES/ALBUM/album.php";
-    include "./CLASSES/COMMENTAIRES/commentaire.php";
+    include_once "./CLASSES/ALBUM/album.php";
+    include_once "./CLASSES/COMMENTAIRES/commentaire.php";
     $image = new image();
     $image->load_image($_GET["id"]); 
     $parentID=$image->get_imageID();
@@ -27,7 +27,9 @@
             $albumID = $album->get_authorID();
             if($_SESSION['userID'] == $albumID)
             {
-                echo "<div><a class='btn btn-danger btn-lg text-center m-3' href='DOMAINLOGIC/deleteimage.dom.php?id=$imageID'><i class='fa fa-trash'></i> Delete Image</a></div>";
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deleteimage.dom.php'>";
+                echo "<button class='btn btn-danger btn-lg text-center m-3' name='imageID' value='$imageID'><i class='fa fa-trash'></i> Delete Image</a></div>";
+                echo "</form>";
             }
         }
     

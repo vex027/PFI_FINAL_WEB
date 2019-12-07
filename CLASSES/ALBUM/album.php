@@ -2,6 +2,7 @@
 include_once __DIR__ . "/albumTDG.PHP";
 include_once __DIR__ . "/../IMAGE/image.PHP";
 include_once __DIR__ . "/../USER/user.PHP";
+include_once __DIR__ . "/../COMMENTAIRES/commentaire.PHP";
 include_once __DIR__ . "/../../UTILS/sessionhandler.php";
 
 class Album{
@@ -128,27 +129,31 @@ class Album{
         $author->load_user_id($this->authorID);
         $authorName = $author->get_username();
         $authorProfilPic = $author->get_imagesProfile();
-     
+        
+
+        $nombreCommentaire = Commentaire::get_comments_number($this->albumID,'ALB');
         echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
         echo "<div class='row'>";
         if(validate_session()){
             if($_SESSION['userID']==$this->authorID){
                 echo "<form method = 'post' action = 'DOMAINLOGIC/deletealbum.dom.php'>";
-                echo "<button class='btn btn-danger' name='albumID' value='$this->albumID'><i class='material-icons'>delete_forever</i></button>";
+                echo "<button class='btn btn-danger center-block' name='albumID' value='$this->albumID'><i class='material-icons'>delete_forever</i></button>";
                 echo "</form>";
             }
         }
         echo "</div>";
-        echo "<a class='text-decoration-none' href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
+        echo "<a class='text-decoration-none' href='album.php?id=$id'> <h2 class='card-title'>$titre</h2>";
         echo "</div>";
-        echo "<img class='card-img-top' src='$imageUrl'>";
+        echo "<img class='card-img-top' src='$imageUrl'></a>";
         echo "<div class='card-footer'>";
         echo "<p class='card-text'><small class='text-muted'> By : <a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a> | Créé le $date </small></p>";
         echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
         echo "<div class='row'>";
-        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' disabled='true'></button>";
-        echo "<h4> $likes</h4>";
+        echo "<i class='fas fa-arrow-alt-circle-up p-2'></i>";
+        echo "<h4 class='p2'> $likes</h4>";
+        echo "<i class='fas fa-comment p-2'></i>";
+        echo "<h4>$nombreCommentaire</h4>";
         echo "</div>";
         echo "</div>";
         echo "</div>";
