@@ -29,5 +29,19 @@
       </div>      
 </div>
 <div class="container" style="margin-top:100px">
-  <?php  ?>
+  <?php 
+    $albumList = Album::create_album_list_by_user($user->get_id());
+    if(!empty($albumList)){
+        echo "<div class=\"row\">";
+        foreach($albumList as $album){
+            echo "<div class=\"col-sm-4\">";
+            $album->display_album();
+            echo "</div>";
+        }
+        echo "</div>";
+    }
+    else{
+        echo "<h3>Aucun Album</h3>";
+    }
+  ?>
 </div>

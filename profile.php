@@ -1,7 +1,7 @@
 <?php
     session_start();
     include "UTILS/sessionhandler.php";
-    include "CLASSES/USER/user.php";
+    include "CLASSES/ALBUM/album.php";
 
     $title = "Profile";
     $module = "profileview.php";
