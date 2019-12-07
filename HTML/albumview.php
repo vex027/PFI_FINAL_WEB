@@ -8,7 +8,16 @@
             if(isset($_SESSION['userID'])){
                 if($_SESSION['userID'] ==$album->get_authorID())
                 {
-                    echo "<a class='btn btn-success' href='createimage.php?id=$parentID'>Create Image</a>";
+                    echo "<div class='row'>";
+                    echo "<div class='col'>";
+                    echo "<a class='btn btn-success h-100' href='createimage.php?id=$parentID'>Create Image</a>";
+                    echo "</div>";
+                    echo "<div class='col text-center'>";
+                    echo "<form method = 'post' action = 'DOMAINLOGIC/deletealbum.dom.php'>";
+                    echo "<button class='btn btn-danger text-center' name='albumID' value='$parentID'><i class='fa fa-trash'></i> Delete Album</button>";
+                    echo "</form>";
+                    echo "</div>";
+                    echo "</div>";
                 }
             }
         } 
