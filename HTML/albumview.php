@@ -8,7 +8,7 @@
             if(isset($_SESSION['userID'])){
                 if($_SESSION['userID'] ==$album->get_authorID())
                 {
-                    echo "<div class='row'>";
+                    echo "<div class='row border-bottom p-4'>";
                     echo "<div class='col'>";
                     echo "<a class='btn btn-success h-100' href='createimage.php?id=$parentID'>Create Image</a>";
                     echo "</div>";
@@ -33,9 +33,12 @@
                 });
             });
         });
-    </script>     
-    <div class='container p-3 m-4'>
-        <p class="text-center text-justify"><?php echo $album->get_description()?></p>
+    </script>    
+    <h2>Description</h2> 
+    <div class='container p-3 m-4 border rounded'>
+        <blockquote class="blockquote text-center">
+            <h5><?php echo $album->get_description()?></h5>
+        </blockquote>
     </div>
     <div class='row'>
         <?php include "imagelistview.php" ?>

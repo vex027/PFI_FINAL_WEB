@@ -27,7 +27,7 @@
             $albumID = $album->get_authorID();
             if($_SESSION['userID'] == $albumID)
             {
-                echo "<div><a class='btn btn-success mb-3' href='DOMAINLOGIC/deleteimage.dom.php?id=$imageID'>Delete Image</a></div>";
+                echo "<div><a class='btn btn-danger btn-lg text-center m-3' href='DOMAINLOGIC/deleteimage.dom.php?id=$imageID'><i class='fa fa-trash'></i> Delete Image</a></div>";
             }
         }
     
