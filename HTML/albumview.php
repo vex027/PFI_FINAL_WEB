@@ -55,7 +55,10 @@
         
         <!--Commentaire section  -->      
         <div div id='comments' class="container border border-dark">
-            <?php include "comment-loader.php" ?>
+            <?php
+                $type ='ALB';
+                include "comment-loader.php"
+              ?>
         </div>
         <button id="comment-load-btn" type="button" class="btn btn-primary" name="button">Plus de Commentaire</button>
         

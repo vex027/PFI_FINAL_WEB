@@ -92,10 +92,9 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "SELECT * FROM $tableName where parentID=:albumID and typeCom='ALB' ORDER BY dateCreation LIMIT :limite";
+            $query = "SELECT * FROM $tableName where parentID=:albumID and typeCom = 'ALB' ORDER BY dateCreation LIMIT $limite";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':albumID', $albumid);
-            $stmt->bindParam(':limite', $limite);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetchAll();

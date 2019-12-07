@@ -16,14 +16,6 @@
         });
       });
 </script>
-<script>
-    $(document).ready( ()=> {
-        $("#like-image-btn").click( function() {
-                
-            });
-        });
-    
-</script>
 <div class="container center mb-3" style="margin-top:30px">
     <div div class="border border-dark mb-sm 5">
         <!-- Affiche limage Selectionner -->
@@ -44,7 +36,10 @@
 
         <!--Commentaire section  -->
         <div div id='comments' class="container border-top border-dark mb-sm 5">
-            <?php include "comment-loader.php" ?>
+            <?php 
+                $type ='IMG';
+                include "comment-loader.php";
+            ?>
         </div>
         <button id="comment-load-btn" type="button" class="btn btn-primary" name="button">Plus de Commentaire</button>
         
