@@ -1,6 +1,5 @@
 <?php
     include __DIR__ . "/../CLASSES/ALBUM/album.php";
-    include __DIR__ . "/../UTILS/sessionhandler.php";
     session_start();
 
     if(!validate_session()){
