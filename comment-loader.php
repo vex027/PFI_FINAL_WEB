@@ -8,6 +8,9 @@
     $lim = 2;
   }
 
+  if(isset($_GET['type'])){
+    $type =$_GET['type'];
+  }
   $comment = new Commentaire();
   if($type =='IMG'){
     $comments = $comment->create_commentaire_list_image($_GET['id'],$lim);
