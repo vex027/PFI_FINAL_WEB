@@ -99,6 +99,14 @@ class Commentaire{
         return $res;
     }
 
+    public static function list_commentaire_by_imageID_noLimit($imageID)
+    {
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_all_commentaire_imageId_noLimit($imageID);
+        $TDG = null;
+        return $res;
+    }
+
     public static function list_commentaire_by_albumID($albumID,$limite)
     {
         $TDG = CommentaireTDG::get_Instance();
@@ -107,10 +115,44 @@ class Commentaire{
         return $res;
     }
 
+    public static function list_commentaire_by_albumID_noLimit($albumID)
+    {
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_all_commentaire_albumId_noLimit($albumID);
+        $TDG = null;
+        return $res;
+    }
+
     public static function create_commentaire_list_album($albumID,$limite)
     {
         $commentaireList = array();
         $commentaires = Commentaire::list_commentaire_by_albumID($albumID,$limite);
+        foreach($commentaires as $res)
+        {
+            $commentaire = new Commentaire();
+            $commentaire->load_Commentaire($res['commentaireID']);
+            array_push($commentaireList,$commentaire);
+        }
+        return $commentaireList;
+    }
+
+    public static function create_commentaire_list_album_noLimit($albumID)
+    {
+        $commentaireList = array();
+        $commentaires = Commentaire::list_commentaire_by_albumID_noLimit($albumID);
+        foreach($commentaires as $res)
+        {
+            $commentaire = new Commentaire();
+            $commentaire->load_Commentaire($res['commentaireID']);
+            array_push($commentaireList,$commentaire);
+        }
+        return $commentaireList;
+    }
+
+    public static function create_commentaire_list_image_noLimit($imageID)
+    {
+        $commentaireList = array();
+        $commentaires = Commentaire::list_commentaire_by_imageID_noLimit($imageID);
         foreach($commentaires as $res)
         {
             $commentaire = new Commentaire();

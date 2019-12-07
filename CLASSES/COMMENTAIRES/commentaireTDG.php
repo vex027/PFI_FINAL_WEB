@@ -107,6 +107,26 @@ class CommentaireTDG extends DBAO{
         return $result;
     }
 
+    public function get_all_commentaire_albumId_noLimit($albumid){
+
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName where parentID=:albumID and typeCom = 'ALB' ORDER BY dateCreation";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':albumID', $albumid);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
     public function get_all_commentaire_imageId($imageId,$limite){
         try{
             $conn = $this->connect();
@@ -125,6 +145,26 @@ class CommentaireTDG extends DBAO{
         $conn = null;
         return $result;
     }
+
+    public function get_all_commentaire_imageId_noLimit($imageId){
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName where parentID = :imageId and typeCom = 'IMG' order by dateCreation";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageId', $imageId);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+    
 
     public function add_commentaire($typeCom, $contenu, $parentID,$authorID){ 
 
