@@ -98,6 +98,12 @@ class Image{
         return true;
     }
 
+    public function delete_image(){
+        $tdg = ImageTDG::get_Instance();
+        $res = $tdg->delete_image($this->get_imageID());
+        return $res;
+    }
+
     public function get_firstImagePosted($albumID)
     {
         $tdg = ImageTDG::get_Instance();
