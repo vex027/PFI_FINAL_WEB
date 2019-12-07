@@ -4,6 +4,7 @@
     $image = new image();
     $image->load_image($_GET["id"]); 
 ?>
+<!---- Script Load comments !-->
 <script>
       $(document).ready( function() {
         var CommentCount = 4;
@@ -15,7 +16,14 @@
         });
       });
 </script>
-
+<script>
+    $(document).ready( ()=> {
+        $("#like-image-btn").click( function() {
+                
+            });
+        });
+    
+</script>
 <div class="container center mb-3" style="margin-top:30px">
     <div div class="border border-dark mb-sm 5">
         <!-- Affiche limage Selectionner -->
@@ -27,9 +35,11 @@
         <!--Upvote arrow & nb de UpVotes  -->
         <div class="d-flex flex-row bd-highlight border-top border-dark mb-sm 5">
             <div class="p-2 bd-highlight  border-right border-dark mb-sm 5">
-                <i class="fas fa-arrow-alt-circle-up"></i>
+                <form method = "post" action = "DOMAINLOGIC/like.dom.php">
+                    <button id="like-image-btn" class="fas fa-arrow-alt-circle-up btn" name='imageID' value='<?php echo $image->get_imageID()?>'></button>
+                </form>
             </div>
-            <div class="p-2 bd-highlight  border-right border-dark mb-sm 5"> <?php echo $image->get_likes() ?></div>
+            <div id="like-image-counter" class="p-2 bd-highlight  border-right border-dark mb-sm 5"> <?php echo $image->get_likes() ?></div>
         </div>
 
         <!--Commentaire section  -->

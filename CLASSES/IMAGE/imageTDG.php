@@ -209,7 +209,7 @@ class ImageTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = "User_Images_Likes";
-            $query = "SELECT COUNT(:imageID) as likes FROM $tableName";
+            $query = "SELECT COUNT(:imageID) as likes FROM $tableName where imageID = :imageID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':imageID', $imageID);
             $stmt->execute();

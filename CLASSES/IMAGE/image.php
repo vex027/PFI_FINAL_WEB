@@ -163,16 +163,16 @@ class Image{
     }
 
 
-    public function get_likes($imageID)
+    public function get_likes()
     {
-        if(!$this->load_image($imageID))
+        if(!$this->load_image($this->imageID))
         {
           return false;
         }
-        $TDG = AlbumTDG::get_Instance();
-        $res = $TDG->get_likes_number($imageID); 
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->get_likes_number($this->imageID); 
         $TDG = null;
-        return $res; 
+        return $res['likes']; 
     }
 
     public function add_like($userID,$imageID)
@@ -182,7 +182,7 @@ class Image{
             return false;
         }
         
-        $TDG = CommentaireTDG::get_Instance();
+        $TDG = ImageTDG::get_Instance();
         $res = $TDG->add_like($imageID,$userID);
         $TDG = null;
         return $res;

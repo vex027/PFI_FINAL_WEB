@@ -126,6 +126,7 @@ class Album{
         $titre = $this->title;
         $id = $this->albumID;
         $date =$this->date;
+        $likes = $this->get_likes($this->albumID);
 
         
         echo "<div class='card bg-light'>";

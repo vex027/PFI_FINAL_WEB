@@ -27,3 +27,4 @@
 
     header("Location: ../error.php?ErrorMSG=invalid email or password");
     die();
+?>
