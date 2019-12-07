@@ -243,4 +243,24 @@ class ImageTDG extends DBAO{
         $conn = null;
         return $resp;
     }
+
+    public function get_number_image_album($albumID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT COUNT(:albumID) as nombre FROM $tableName where albumID = :albumID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
 }

@@ -198,4 +198,12 @@ class Image{
         $TDG = null;
         return $res;
     }
+
+    public static function get_number_image_album($albumID)
+    {
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->get_number_image_album($albumID); 
+        $TDG = null;
+        return $res['number']; 
+    }
 }

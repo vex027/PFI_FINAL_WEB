@@ -134,7 +134,7 @@ class Album{
         echo "<div class='row'>";
         if(validate_session()){
             if($_SESSION['userID']==$this->authorID){
-                echo "<form method = 'post' action = 'DOMAINLOGIC/deleteAlbum.dom.php'>";
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deletealbum.dom.php'>";
                 echo "<button class='btn btn-danger' name='albumID' value='$this->albumID'><i class='material-icons'>delete_forever</i></button>";
                 echo "</form>";
             }
