@@ -8,7 +8,7 @@
     $image = new Image();
     $image->load_image($_GET["id"]);
     $album = new Album();
-    $album->load_album($image->get_authorID());
+    $album->load_album($image->get_albumID());
 
     if($_SESSION["userID"] != $album->get_authorID()){
         header("Location: error.php?ErrorMSG=Not%20the%20author!");

@@ -35,7 +35,7 @@
         });
     </script>    
     <h2>Description</h2> 
-    <div class='container p-3 m-4 border rounded'>
+    <div class='container p-3 m-4 border rounded col'>
         <blockquote class="blockquote text-center">
             <h5><?php echo $album->get_description()?></h5>
         </blockquote>
