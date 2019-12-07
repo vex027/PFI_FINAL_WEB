@@ -2,6 +2,7 @@
 include_once __DIR__ . "/albumTDG.PHP";
 include_once __DIR__ . "/../IMAGE/image.PHP";
 include_once __DIR__ . "/../USER/user.PHP";
+include_once __DIR__ . "/../../UTILS/sessionhandler.php";
 
 class Album{
 
@@ -127,9 +128,18 @@ class Album{
         $author->load_user_id($this->authorID);
         $authorName = $author->get_username();
         $authorProfilPic = $author->get_imagesProfile();
-        
+     
         echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
+        echo "<div class='row'>";
+        if(validate_session()){
+            if($_SESSION['userID']==$this->authorID){
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deleteAlbum.dom.php'>";
+                echo "<button class='btn btn-danger' name='albumID' value='$this->albumID'><i class='material-icons'>delete_forever</i></button>";
+                echo "</form>";
+            }
+        }
+        echo "</div>";
         echo "<a class='text-decoration-none' href='album.php?id=$id'> <h2 class='card-title'>$titre</h2> </a>";
         echo "</div>";
         echo "<img class='card-img-top' src='$imageUrl'>";
