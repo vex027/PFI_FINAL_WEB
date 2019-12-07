@@ -1,5 +1,6 @@
 <?php
-    include "./CLASSES/IMAGE/image.php";
+
+    include "./CLASSES/ALBUM/album.php";
     include "./CLASSES/COMMENTAIRES/commentaire.php";
     $image = new image();
     $image->load_image($_GET["id"]); 
@@ -17,7 +18,22 @@
       });
 </script>
 <div class="container center mb-3" style="margin-top:30px">
+    <?php
+    if(validate_session()){
+        $album = new Album();
+        $imageID = $image->get_imageID();
+        $album->load_album($imageID);
+        if(isset($_SESSION['userID'])){
+            $albumID = $album->get_authorID();
+            if($_SESSION['userID'] == $albumID)
+            {
+                echo "<div><a class='btn btn-success mb-3' href='DOMAINLOGIC/deleteimage.dom.php?id=$imageID'>Delete Image</a></div>";
+            }
+        }
+    }
+    ?>
     <div div class="border border-dark mb-sm 5">
+        
         <!-- Affiche limage Selectionner -->
         <div>
             <h1> <?php echo $image->get_description() ?></h1>
