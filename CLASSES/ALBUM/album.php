@@ -158,6 +158,14 @@ class Album{
         return $res;
     }
 
+    public static function list_albums_by_authorID($authorID)
+    {
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_by_authorID($authorID);
+        $TDG = null;
+        return $res;
+    }
+
     public static function create_album_list()
     {
         $albumList = array();
@@ -184,13 +192,17 @@ class Album{
         return $albumList;
     }
 
-    public static function list_albums_by_authorID($authorID)
+    public static function create_album_list_by_user($authorID)
     {
-        $TDG = AlbumTDG::get_Instance();
-        $res = $TDG->get_all_albums();
-        $TDG = null;
-        return $res;
-
+        $albumList = array();
+        $albums = Album::list_albums_by_authorID($authorID);
+        foreach($albums as $res)
+        {
+            $album = new Album();
+            $album->load_album($res['albumID']);
+            array_push($albumList,$album);
+        }
+        return $albumList;
     }
 
     public function get_likes()
