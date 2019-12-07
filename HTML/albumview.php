@@ -14,7 +14,6 @@
         } 
     ?>
     <!---- Script Load comments !-->
-    
     <script>
         $(document).ready( function() {
             var CommentCount = 4;

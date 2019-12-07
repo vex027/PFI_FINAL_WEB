@@ -92,8 +92,8 @@ class Commentaire{
     }
 
     public function delete_commentaire(){
-        $tdg = ImageTDG::get_Instance();
-        $res = $tdg->delete_image($this->get_commentaireID();
+        $tdg = CommentaireTDG::get_Instance();
+        $res = $tdg->delete_commentaire($this->get_commentaireID());
         return $res;
     }
 

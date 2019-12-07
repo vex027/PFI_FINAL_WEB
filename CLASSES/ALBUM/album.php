@@ -242,4 +242,15 @@ class Album{
         $TDG = null;
         return $res;
     }
+
+    public function delete_album($albumID)
+    {
+        if(empty($albumID))
+        {
+            return false;
+        }
+        $tdg = AlbumTDG::get_Instance();
+        $res = $tdg->delete_album($this->get_id());
+        return $res;
+    }
 }
