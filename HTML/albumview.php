@@ -44,6 +44,7 @@
         <?php include "imagelistview.php" ?>
     </div>
     <div>
+        <!-- UPvote Button -->
         <div class="d-flex flex-row bd-highlight border-top border-right border-dark mb-sm 5">
             <div class="p-2 bd-highlight border-left border-right border-dark mb-sm 5">
                 <form method = "post" action = "DOMAINLOGIC/likeAlbum.dom.php">
