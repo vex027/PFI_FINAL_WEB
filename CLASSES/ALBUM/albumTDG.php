@@ -259,12 +259,53 @@ class AlbumTDG extends DBAO{
         return $result;
     }
 
+    public function get_like_number_user($albumID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Albums_Likes";
+            $query = "SELECT COUNT(:albumID) as likes FROM $tableName where albumID = :albumID AND userID = :userID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
     public function add_like($albumID,$userID)
     {
         try{
             $conn = $this->connect();
             $tableName = "User_Albums_Likes";
             $query = "INSERT INTO $tableName VALUES (:userID, :albumID)";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':albumID', $albumID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
+
+    public function remove_like($albumID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Albums_Likes";
+            $query = "DELETE FROM $tableName WHERE userID = :userID AND albumID = :albumID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':userID', $userID);
             $stmt->bindParam(':albumID', $albumID);

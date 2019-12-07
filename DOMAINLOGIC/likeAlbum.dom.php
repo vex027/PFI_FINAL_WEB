@@ -13,7 +13,13 @@
 
     //Validation Posts
     $album = new Album();
-
-    $album->add_like($userID,$albumID);
+    $album->load_album($albumID);
+    if($album->get_user_alreadyLiked($userID))
+    {
+        $album->remove_like($userID,$albumID);
+    }else
+    {
+        $album->add_like($userID,$albumID);
+    }
     header("Location: ../album.php?id=$albumID");
 ?>

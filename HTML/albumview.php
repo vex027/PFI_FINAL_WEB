@@ -49,9 +49,25 @@
                 });
             });
         });
-    </script>    
+    </script> 
+    <script>
+        $(document).ready( function() {
+    <?php 
+        if($album->get_user_alreadyLiked($_SESSION['userID']))
+        {          
+            echo "$('#album-like-btn').addClass('btn-success');";
+        }else{
+            echo "$('#album-like-btn').removeClass('btn-success');";
+        } 
+    ?>  
+        });
+    </script> 
     <div class="row border-bottom mb-4">
-        <h1>
+        <form method = "post" action = "DOMAINLOGIC/likeAlbum.dom.php" class='p-4'>
+            <button id='album-like-btn' class="fas fa-arrow-alt-circle-up btn btn-secondary btn-lg" name='albumID' value='<?php echo $parentID?>'></button>
+        </form>
+        <h1 class='m-0 p-3'><?php echo $album->get_likes() ?> </h1>
+        <h1 class='m-0 p-3'>
             <small class='text-muted'> Titre : </small><?php echo $album->get_title()?> 
             <small class='text-muted'>| By : 
             <?php echo "<a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a>"?>
@@ -66,20 +82,8 @@
     </div>
     <div class='row'>
         <?php include "imagelistview.php" ?>
-    </div>
-    <div>
-        <!-- UPvote Button -->
-        <div class="d-flex flex-row bd-highlight border-top border-right border-dark mb-sm 5">
-            <div class="p-2 bd-highlight border-left border-right border-dark mb-sm 5">
-                <form method = "post" action = "DOMAINLOGIC/likeAlbum.dom.php">
-                    <button id="like-album-btn" class="fas fa-arrow-alt-circle-up btn" name='albumID' value='<?php echo $parentID?>'></button>
-                </form>
-            </div>
-            <div id="like-album-counter" class="p-2 bd-highlight border-right border-dark mb-sm 5"> <?php echo $album->get_likes() ?></div>
-        </div>
-        
+    </div>      
         <!--Commentaire section  -->      
-        <?php include "commentview.php"; ?>
-    </div>          
+    <?php include "commentview.php"; ?>        
     
 </div>

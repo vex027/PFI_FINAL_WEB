@@ -130,11 +130,12 @@ class Album{
         $authorName = $author->get_username();
         $authorProfilPic = $author->get_imagesProfile();
         
-
         $nombreCommentaire = Commentaire::get_comments_number($this->albumID,'ALB');
+
         echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
         echo "<div class='row'>";
+
         if(validate_session()){
             if($_SESSION['userID']==$this->authorID){
                 echo "<form method = 'post' action = 'DOMAINLOGIC/deletealbum.dom.php'>";
@@ -235,6 +236,18 @@ class Album{
         return $res['likes']; 
     }
 
+    public function get_user_alreadyLiked($userID)
+    {
+        if(!$this->load_album($this->albumID))
+        {
+          return false;
+        }
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_like_number_user($this->albumID,$userID); 
+        $TDG = null;
+        return $res['likes'] ==1; 
+    }
+
     public function add_like($userID,$albumID)
     {
         if(empty($userID) || empty($albumID))
@@ -244,6 +257,19 @@ class Album{
         
         $TDG = AlbumTDG::get_Instance();
         $res = $TDG->add_like($albumID,$userID);
+        $TDG = null;
+        return $res;
+    }
+
+    public function remove_like($userID,$albumID)
+    {
+        if(empty($userID) || empty($albumID))
+        {
+            return false;
+        }
+        
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->remove_like($albumID,$userID);
         $TDG = null;
         return $res;
     }

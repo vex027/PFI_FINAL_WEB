@@ -1,4 +1,4 @@
-<div div id='comments' class="container border border-dark">
+<div div id='comments' class="container">
             <?php
                 $type ='ALB';
                 include "comment-loader.php"
@@ -6,7 +6,7 @@
         </div>
         <button id="comment-load-btn" type="button" class="btn btn-primary" name="button">Plus de Commentaire</button>
         
-        <div div class="container border-dark mb-sm 5">
+        <div div class="container mb-sm 5">
             <h1>Ajouter un commentaire</h1>     
         </div>
         <form class method = "post" action = "./DOMAINLOGIC/ajoutercommentaire.dom.php?id=<?php echo $parentID?>&type=ALB" enctype="multipart/form-data">
