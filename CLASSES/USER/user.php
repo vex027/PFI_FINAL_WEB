@@ -277,17 +277,19 @@ class User{
         foreach($users as $res)
         {
             $user = new User();
-            $user->load_user($res['userID']);
+            $user->load_user($res['email']);
             array_push($userList,$user);
         }
         return $userList;
     }
 
     public function display_user(){
+        $img = $this->get_imagesProfile();
+        $name = $this->get_username();
         echo "<div class='card bg-light'>";
         echo "<div class='card-footer'>";
-        echo "<p class='card-text'><a class='text-decoration-none' href='profile.php?username=$username'>$username</a></p>";
-        echo "<a href='profile.php?username=$this->getusername'><img src='$imagesProfile' class='img-thumbnail' style='width:20%;height:60%'></a>";
+        echo "<p class='card-text'><a class='text-decoration-none' href='profile.php?username=$name'>$name</a></p>";
+        echo "<a href='profile.php?username=$name'><img src='$img' class='img-thumbnail' style='width:20%;height:60%'></a>";
         echo "</div>";
         echo "</div>";
     }
