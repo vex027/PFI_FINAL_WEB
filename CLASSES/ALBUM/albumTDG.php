@@ -244,7 +244,7 @@ class AlbumTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = "User_Albums_Likes";
-            $query = "SELECT COUNT(:albumID) as likes FROM $tableName";
+            $query = "SELECT COUNT(:albumID) as likes FROM $tableName where albumID = :albumID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':albumID', $albumID);
             $stmt->execute();

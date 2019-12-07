@@ -4,12 +4,10 @@
 
 
     session_start();
-
     if(!validate_session()){
         header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");
         die();
     }
-
     $albumID = $_POST['albumID'];
     $userID = $_SESSION['userID'];
 

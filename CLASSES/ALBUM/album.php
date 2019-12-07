@@ -114,6 +114,11 @@ class Album{
 
     public function display_album() //Modifier pour pouvoir l'utiliser en search
     {
+        $titre = $this->title;
+        $id = $this->albumID;
+        $date =$this->date;
+        $likes = $this->get_likes();
+
         $imageBackground = new Image();
         $imageBackground->get_firstImagePosted($this->albumID);
         $imageUrl = $imageBackground->get_imageUrl();
@@ -122,12 +127,6 @@ class Album{
         $author->load_user_id($this->authorID);
         $authorName = $author->get_username();
         $authorProfilPic = $author->get_imagesProfile();
-
-        $titre = $this->title;
-        $id = $this->albumID;
-        $date =$this->date;
-        $likes = $this->get_likes($this->albumID);
-
         
         echo "<div class='card bg-light'>";
         echo "<div class='card-header'>";
@@ -137,6 +136,12 @@ class Album{
         echo "<div class='card-footer'>";
         echo "<p class='card-text'><small class='text-muted'> By : <a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a> | Créé le $date </small></p>";
         echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
+        echo "<div class='row'>";
+        echo "<form method = 'post' action = 'DOMAINLOGIC/likeAlbum.dom.php'>";
+        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' name='albumID' value='$id'></button>";
+        echo "</form>";
+        echo "<h4> $likes</h4>";
+        echo "</div>";
         echo "</div>";
         echo "</div>";
         
@@ -212,7 +217,7 @@ class Album{
             return false;
         }
         
-        $TDG = CommentaireTDG::get_Instance();
+        $TDG = AlbumTDG::get_Instance();
         $res = $TDG->add_like($albumID,$userID);
         $TDG = null;
         return $res;

@@ -176,7 +176,7 @@ class CommentaireTDG extends DBAO{
         try{
             $conn = $this->connect();
             $tableName = "User_Comments_Likes";
-            $query = "SELECT COUNT(:commentID) as likes FROM $tableName";
+            $query = "SELECT COUNT(:commentID) as likes FROM $tableName where commentID = :commentID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':commentID', $commentID);
             $stmt->execute();
