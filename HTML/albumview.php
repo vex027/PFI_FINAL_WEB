@@ -38,7 +38,7 @@
     
     
     <div class='container p-3 m-4'>
-        <p class="text-center text-justify"><?php echo $album->get_description() ?></p>
+        <p class="text-center text-justify"><?php echo $album->get_description()?></p>
     </div>
     <div class='row'>
         <?php include "imagelistview.php" ?>

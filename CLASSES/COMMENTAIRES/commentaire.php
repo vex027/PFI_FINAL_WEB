@@ -139,7 +139,17 @@ class Commentaire{
         $user->load_user_id($this->authorID);
         $profilPic = $user->get_imagesProfile();
         $username = $user->get_username();
+        $likes = $this->get_likes();
+
         echo "<div class='card card-default text-left p-3'>";
+        echo "<div class='row'>";
+        echo "<form method = 'post' action = 'DOMAINLOGIC/likeComment.dom.php'>";
+        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' name='type' value='$this->typeCom'></button>";
+        echo "<input type='hidden' name='commentID' value='$this->commentaireID'>";
+        echo "<input type='hidden' name='parentID' value='$this->parentID'>";
+        echo "</form>";
+        echo "<h4> $likes</h4>";
+        echo "</div>";
         echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";
         echo "<div class='card-heading'><a href='profile.php?username=$username'><h4> $username </a><small><i>Posted on $this->dateCreation</i></small></h4></div>";
         echo "<div class='card-body'>". $this->contenu . "</div>";
@@ -147,16 +157,16 @@ class Commentaire{
   
     }
 
-    public function get_likes($commentaireID)
+    public function get_likes()
     {
-        if(!$this->load_Commentaire($commentaireID))
+        if(!$this->load_Commentaire($this->get_commentaireID()))
         {
           return false;
         }
         $TDG = CommentaireTDG::get_Instance();
-        $res = $TDG->get_likes_number($commentaireID); 
+        $res = $TDG->get_likes_number($this->get_commentaireID()); 
         $TDG = null;
-        return $res; 
+        return $res['likes']; 
     }
 
     public function add_like($userID,$commentaireID)

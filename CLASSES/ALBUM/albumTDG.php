@@ -161,7 +161,7 @@ class AlbumTDG extends DBAO{
 
     public function add_album($title, $authorID, $description){
         try{
-            $date = date("Y-m-d");
+            $date = date('Y-m-d h:i:s');
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (titre, authorId, description,dateCreation) VALUES (:titre, :authorID, :description, :date)";

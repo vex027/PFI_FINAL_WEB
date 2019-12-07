@@ -137,9 +137,7 @@ class Album{
         echo "<p class='card-text'><small class='text-muted'> By : <a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a> | Créé le $date </small></p>";
         echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
         echo "<div class='row'>";
-        echo "<form method = 'post' action = 'DOMAINLOGIC/likeAlbum.dom.php'>";
-        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' name='albumID' value='$id'></button>";
-        echo "</form>";
+        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' disabled='true'></button>";
         echo "<h4> $likes</h4>";
         echo "</div>";
         echo "</div>";
