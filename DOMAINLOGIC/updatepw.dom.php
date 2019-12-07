@@ -30,8 +30,8 @@
     header("Location: ../error.php?ErrorMSG=Bad%20request");
     die();
   }
-
-  header("Location: ../billboard.php");
+  $username = $_SESSION["userName"];
+  header("Location: ../profile.php?username=$username");
   die();
 
  ?>
