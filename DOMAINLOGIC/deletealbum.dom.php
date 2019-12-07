@@ -1,5 +1,6 @@
 <?php  
     include "../CLASSES/ALBUM/album.php";
+    include "../CLASSES/COMMENTAIRES/commentaire.php";
     $album = new Album();
     $album->load_album($_POST["albumID"]);
 
@@ -11,18 +12,18 @@
         unlink($file_pointer);
         $commentaireList = Commentaire::create_commentaire_list_image_noLimit($image->get_imageID());
         foreach($commentaireList as $com){
-            //deletecommentaire
+            $com->delete_commentaire();
         }
     }
 
     $commentaireList = Commentaire::create_commentaire_list_album_noLimit($album->get_id());
     foreach($commentaireList as $com){
-        //deletecommentaire
+        $com->delete_commentaire();
     }
 
-    $album->
+    $album->delete_album();
 
     $albumID = $image->get_albumID();
-    header("Location: ../album.php?id=$albumID");
+    header("Location: ../accueil.php");
     die();
 ?>
