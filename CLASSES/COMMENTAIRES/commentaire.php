@@ -190,19 +190,18 @@ class Commentaire{
         $likes = $this->get_likes();
 
         echo "<div class='card card-default text-left p-3'>";
-        echo "<div class='row'>";
-        echo "<form method = 'post' action = 'DOMAINLOGIC/likeComment.dom.php'>";
-        echo "<button id='like-album-btn' class='fas fa-arrow-alt-circle-up btn btn-lg' name='type' value='$this->typeCom'></button>";
+        echo "<div class='row mb-0'>";
+        echo "<form method = 'post' action = 'DOMAINLOGIC/likeComment.dom.php' class='pl-1'>";
+        echo "<button id='like-comment-btn-$this->commentaireID' class='fas fa-arrow-alt-circle-up btn btn-secondary btn-md' name='type' value='$this->typeCom'></button>";
         echo "<input type='hidden' name='commentID' value='$this->commentaireID'>";
         echo "<input type='hidden' name='parentID' value='$this->parentID'>";
         echo "</form>";
-        echo "<h4> $likes</h4>";
+        echo "<h4 class='m-0 pl-1'> $likes</h4>";
         echo "</div>";
         echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";
         echo "<div class='card-heading'><a href='profile.php?username=$username'><h4> $username </a><small><i>Posted on $this->dateCreation</i></small></h4></div>";
         echo "<div class='card-body'>". $this->contenu . "</div>";
         echo "</div>";
-  
     }
 
     public function get_likes()
@@ -230,11 +229,36 @@ class Commentaire{
         return $res;
     }
 
+    public function remove_like($userID,$commentaireID)
+    {
+        if(empty($userID) || empty($commentaireID))
+        {
+            return false;
+        }
+        
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->remove_like($commentaireID,$userID);
+        $TDG = null;
+        return $res;
+    }
+
     public static function get_comments_number($parentID,$type)
     {
         $TDG = CommentaireTDG::get_Instance();
         $res = $TDG->get_comments_number($parentID,$type); 
         $TDG = null;
         return $res['nombre']; 
+    }
+
+    public function get_user_alreadyLiked($userID)
+    {
+        if(!$this->load_Commentaire($this->commentaireID))
+        {
+          return false;
+        }
+        $TDG = CommentaireTDG::get_Instance();
+        $res = $TDG->get_like_number_user($this->commentaireID,$userID); 
+        $TDG = null;
+        return $res['likes'] ==1; 
     }
 }

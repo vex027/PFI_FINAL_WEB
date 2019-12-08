@@ -271,6 +271,26 @@ class CommentaireTDG extends DBAO{
         return $resp;
     }
 
+    public function remove_like($commentaireID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Comments_Likes";
+            $query = "DELETE FROM $tableName WHERE userID = :userID AND commentID = :commentaireID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':commentaireID', $commentaireID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
+
     public function get_comments_number($parentID,$type)
     {
         try{
@@ -280,6 +300,27 @@ class CommentaireTDG extends DBAO{
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':parentID', $parentID);
             $stmt->bindParam(':type', $type);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function get_like_number_user($commentaireID,$userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Comments_Likes";
+            $query = "SELECT COUNT(:commentaireID) as likes FROM $tableName where commentID = :commentaireID AND userID = :userID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':commentaireID', $commentaireID);
+            $stmt->bindParam(':userID', $userID);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $result = $stmt->fetch();

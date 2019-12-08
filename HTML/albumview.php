@@ -52,15 +52,14 @@
     </script> 
     <script>
         $(document).ready( function() {
-    <?php 
-        if($album->get_user_alreadyLiked($_SESSION['userID']))
-        {          
-            echo "$('#album-like-btn').addClass('btn-success');";
-        }else{
-            echo "$('#album-like-btn').removeClass('btn-success');";
-        } 
-    ?>  
-        });
+        <?php 
+            if($album->get_user_alreadyLiked($_SESSION['userID']))
+            {          
+                echo "$('#album-like-btn').addClass('btn-success');";
+            }else{
+                echo "$('#album-like-btn').removeClass('btn-success');";
+            } 
+        ?>});
     </script> 
     <div class="row border-bottom mb-4">
         <form method = "post" action = "DOMAINLOGIC/likeAlbum.dom.php" class='p-4'>

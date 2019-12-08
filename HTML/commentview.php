@@ -1,4 +1,4 @@
-<div div id='comments' class="container">
+<div id='comments' class="container">
             <?php
                 $type ='ALB';
                 include "comment-loader.php"
