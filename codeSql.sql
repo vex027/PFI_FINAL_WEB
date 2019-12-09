@@ -27,6 +27,7 @@ imageUrl varchar(500) not null,
 albumID integer(10) not null,
 description longtext,
 dateCreation DATETIME not null,
+views integer(100) default 0 not null,
 constraint FK_ALBUMID_IMAGE foreign key(albumID) references Album(albumID)
 );
 

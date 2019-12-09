@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . "/commentaireTDG.PHP";
 include_once __DIR__ . "/../USER/user.PHP";
+include_once __DIR__ . "/../../UTILS/sessionhandler.php";
 class Commentaire{
 
     private $commentaireID;   
@@ -64,9 +65,9 @@ class Commentaire{
         return true;
     }
 
-    public function update_commentaire_info($id, $contenu){
+    public function update_commentaire_info($contenu){
 
-        if(!$this->load_Commentaire($id))
+        if(!$this->load_Commentaire($this->get_commentaireID()))
         {
           return false;
         }
@@ -192,11 +193,27 @@ class Commentaire{
         echo "<div class='card card-default text-left p-3'>";
         echo "<div class='row mb-0'>";
         echo "<form method = 'post' action = 'DOMAINLOGIC/likeComment.dom.php' class='pl-1'>";
-        echo "<button id='like-comment-btn-$this->commentaireID' class='fas fa-arrow-alt-circle-up btn btn-secondary btn-md' name='type' value='$this->typeCom'></button>";
+        echo "<button id='like-comment-btn-$this->commentaireID' class='fas fa-arrow-alt-circle-up btn btn-secondary btn-lg m-3' name='type' value='$this->typeCom'></button>";
         echo "<input type='hidden' name='commentID' value='$this->commentaireID'>";
         echo "<input type='hidden' name='parentID' value='$this->parentID'>";
         echo "</form>";
-        echo "<h4 class='m-0 pl-1'> $likes</h4>";
+        echo "<h1 class='m-0 pl-1 pt-2'> $likes</h4>";
+
+        if(validate_session()){
+            if($_SESSION['userID']==$this->authorID){
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deletecommentaire.dom.php' class='m-0'>";
+                echo "<button class='btn btn-danger btn-lg fa fa-trash m-3' name='commentaireID' value='$this->commentaireID'></button>";
+                echo "</form>";
+
+                echo "<button id='$this->commentaireID' class='btn btn-info fa fa-edit btn-lg m-3 edit-btn' name='albumID' value='$this->commentaireID'></button>";
+            }
+        }
+        echo "</div>";
+        echo "<div id='textAreaEdit-$this->commentaireID' class='row d-none'>";
+        echo "<form method = 'post' action = 'DOMAINLOGIC/editcomment.dom.php' class='m-0 w-100'>";
+                echo "<textarea id='contenuEdit-$this->commentaireID' name='contenu' class='w-100'>$this->contenu</textarea>";
+                echo "<button class='btn btn-success btn-lg' type='submit' name='commentID' value='$this->commentaireID'>Confirm Edit </button>";
+        echo "</form>";
         echo "</div>";
         echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";
         echo "<div class='card-heading'><a href='profile.php?username=$username'><h4> $username </a><small><i>Posted on $this->dateCreation</i></small></h4></div>";

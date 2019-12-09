@@ -9,8 +9,13 @@
 
     $commentaire = new Commentaire();
     $commentaire->load_Commentaire($_POST['commentaireID']);
-    $commentaire->delete_commentaire();
 
+    if($commentaire->get_authorID() == $_SESSION['userID']){
+        header("Location: error.php?ErrorMSG=Not the author !");
+        die();
+    }
+    
+    $commentaire->delete_commentaire();
     $parentID = $commentaire->get_parentID();
 
     if($commentaire->get_typeCom() == 'IMG'){

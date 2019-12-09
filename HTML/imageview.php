@@ -3,16 +3,19 @@
     include_once "./CLASSES/ALBUM/album.php";
     include_once "./CLASSES/COMMENTAIRES/commentaire.php";
     $image = new image();
-    $image->load_image($_GET["id"]); 
+    $image->load_image($_GET["id"]);
+    $image->add_view(); 
     $parentID=$image->get_imageID();
     $type = 'IMG';
 ?>
-<!---- Script Load comments !-->
 
 <?php include 'commentScript.php'?>
+
 <div class="container center mb-3" style="margin-top:30px">
     <div>
         <a class="btn btn-success" href='album.php?id=<?php echo $image->get_albumID()?>'>Retour a l'album</a>
+        
+        <h1><?php echo $image->get_views() ?></h1>
     </div>
     <?php
         $album = new Album();
