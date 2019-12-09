@@ -65,9 +65,9 @@ class Commentaire{
         return true;
     }
 
-    public function update_commentaire_info($id, $contenu){
+    public function update_commentaire_info($contenu){
 
-        if(!$this->load_Commentaire($id))
+        if(!$this->load_Commentaire($this->get_commentaireID()))
         {
           return false;
         }
