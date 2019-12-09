@@ -280,4 +280,49 @@ class Album{
         $res = $tdg->delete_album($this->get_id());
         return $res;
     }
+
+    public static function get_most_likedAlbum($userID)
+    {
+        if(empty($userID))
+        {
+            return false;
+        }
+        
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_mostLiked_album($userID);
+        $TDG = null;
+        $album = new Album();
+        $album->load_album($res['albumID']);
+        return $album;
+    }
+
+    public static function get_last_album($userID)
+    {
+        if(empty($userID))
+        {
+            return false;
+        }
+        
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_last_album($userID);
+        $TDG = null;
+        $album = new Album();
+        $album->load_album($res['albumID']);
+        return $album;
+    }
+
+    public static function get_first_album($userID)
+    {
+        if(empty($userID))
+        {
+            return false;
+        }
+        
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->get_first_album($userID);
+        $TDG = null;
+        $album = new Album();
+        $album->load_album($res['albumID']);
+        return $album;
+    }
 }

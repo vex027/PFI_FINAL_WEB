@@ -5,19 +5,11 @@
     $image = new image();
     $image->load_image($_GET["id"]); 
     $parentID=$image->get_imageID();
+    $type = 'IMG';
 ?>
 <!---- Script Load comments !-->
-<script>
-      $(document).ready( function() {
-        var CommentCount = 4;
-        $("#comment-load-btn").click( function() {
-            CommentCount = CommentCount + 4;
-          $("#comments").load("comment-loader.php?id=<?php echo $image->get_imageID()?>&type=IMG", {
-            newCommentCount: CommentCount
-            });
-        });
-      });
-</script>
+
+<?php include 'commentScript.php'?>
 <div class="container center mb-3" style="margin-top:30px">
     <div>
         <a class="btn btn-success" href='album.php?id=<?php echo $image->get_albumID()?>'>Retour a l'album</a>

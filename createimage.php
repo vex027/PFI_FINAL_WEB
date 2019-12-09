@@ -2,6 +2,12 @@
     session_start();
     include "UTILS/sessionhandler.php";
 
+
+    if(!validate_session())
+    {
+        header("Location: error.php?ErrorMSG=Not logged in !");
+        die();
+    }
     //load view content
     $module = "createimageview.php";
     $content = array();

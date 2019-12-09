@@ -4,29 +4,33 @@
   if(!isset($_SESSION)){
     session_start();
   }
-  if(!empty($_POST["newCommentCount"])){
-    $lim = $_POST["newCommentCount"];
-  }
-  else{
-    $lim = 2;
-  }
 
   if(isset($_GET['type'])){
     $type =$_GET['type'];
   }
+  $parentID = $_GET['id'];
+  if(!empty($_POST["newCommentCount"])){
+    $lim = $_POST["newCommentCount"];
+  }
+  else{
+    if(!isset($_COOKIE['commentCount-'.$type.$parentID])){
+      $lim = 4;
+    }else{
+      $lim = $_COOKIE['commentCount-'.$type.$parentID];
+    }
+  }
+  
   $comment = new Commentaire();
   if($type =='IMG'){
-    $comments = $comment->create_commentaire_list_image($_GET['id'],$lim);
+    $comments = $comment->create_commentaire_list_image($parentID,$lim);
   }
 
   if($type=='ALB'){
-    $comments = $comment->create_commentaire_list_album($_GET['id'],$lim);
+    $comments = $comment->create_commentaire_list_album($parentID,$lim);
   }
   
   foreach($comments as $comment){  
     $comment->display();
-    $parentID = $comment->get_parentID();
-    $commentID = $comment->get_commentaireID();
     if(validate_session()){
       echo "<script>";
       echo " $(document).ready( function() {";

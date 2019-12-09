@@ -161,7 +161,8 @@ class AlbumTDG extends DBAO{
 
     public function add_album($title, $authorID, $description){
         try{
-            $date = date('Y-m-d h:i:s');
+            date_default_timezone_set('America/New_York');
+            $date = date('Y-m-d H:i:s');
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (titre, authorId, description,dateCreation) VALUES (:titre, :authorID, :description, :date)";
@@ -318,5 +319,67 @@ class AlbumTDG extends DBAO{
         }
         $conn = null;
         return $resp;
+    }
+
+    public function get_mostLiked_album($userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = "User_Albums_Likes";
+            $query = "SELECT MAX(A.albumID) as likes, A.albumID FROM 
+            (Album A INNER JOIN $tableName U ON A.albumID = U.albumID)  
+            where authorID = :userID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function get_last_album($userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName WHERE authorID=:authorID ORDER BY dateCreation DESC LIMIT 1";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':authorID', $userID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
+    }
+
+    public function get_first_album($userID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "SELECT * FROM $tableName WHERE authorID=:authorID ORDER BY dateCreation ASC LIMIT 1";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':authorID', $userID);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        $conn = null;
+        return $result;
     }
 }

@@ -169,7 +169,8 @@ class CommentaireTDG extends DBAO{
     public function add_commentaire($typeCom, $contenu, $parentID,$authorID){ 
 
         try{
-            $date = date('Y-m-d h:i:s');
+            date_default_timezone_set('America/New_York');
+            $date = date('Y-m-d H:i:s');
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "INSERT INTO $tableName (typeCom,dateCreation,contenu,parentID,authorID) VALUES (:typeCom , :dateCreation , :contenu, :parentID,:authorID)";
@@ -193,7 +194,6 @@ class CommentaireTDG extends DBAO{
 
     public function delete_commentaire($commentaireID){
         try{
-            $date = date('Y-m-d h:i:s');
             $conn = $this->connect();
             $tableName = $this->tableName;
             $query = "DELETE FROM $tableName where commentaireID = :commentaireID";

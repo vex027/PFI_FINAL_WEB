@@ -8,6 +8,11 @@
         die();
     }
 
+    if(!isset($_GET['id'])){
+        header("Location: ../error.php?ErrorMSG=Album inexistant !");
+        die();
+    }
+
     if(isset($_FILES['firstPic'])){
 
         $albumID = $_GET["id"];

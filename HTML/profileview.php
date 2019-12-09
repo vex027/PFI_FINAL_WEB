@@ -6,6 +6,10 @@
     }
     $user = new User();
     $user->load_user_username($profilUsername);
+    $userID = $user->get_id();
+    $mostLikedAlbum = Album::get_most_likedAlbum($userID);
+    $lastAlbum = Album::get_last_album($userID);
+    $firstAlbum = Album::get_first_album($userID);
 ?>
 <div class="container" style="margin-top:30px">
     <h1><?php echo $profilUsername?> 's Profile</h1>
@@ -13,7 +17,7 @@
         if(validate_session())
         {
           if($profilUsername == $_SESSION['userName']){
-            echo "<a href='editProfil.php' class='float-right btn btn-success btn-lg'>Edit</a>";
+            echo "<a href='editProfil.php' class='float-right pb-2 btn btn-success btn-lg ml-4 mb-4'>Edit <i class='fas fa-edit'></i></a>";
           }
         }
       ?>
@@ -22,15 +26,15 @@
       </div>
       <div class="col-sm-11">
         <ul class="list-group" style="margin-top:50px">
-          <li class="list-group-item"> Meilleur Album : <a href=""> meilleur album </a></li>
-          <li class="list-group-item"> Dernier Album : <a href=""> dernier album </a></li>
-          <li class="list-group-item"> Premier Album : <a href=""> premier album </a></li>
+          <li class="list-group-item"> Most Liked Album : <a href="album.php?id=<?php echo $mostLikedAlbum->get_id()?>"> <?php echo $mostLikedAlbum->get_title()?> </a></li>
+          <li class="list-group-item"> Last Album : <a href="album.php?id=<?php echo $lastAlbum->get_id()?>">  <?php echo $lastAlbum->get_title()?> </a></li>
+          <li class="list-group-item"> First Album : <a href="album.php?id=<?php echo $firstAlbum->get_id()?>"> <?php echo $firstAlbum->get_title()?></a></li>
         </ul>
       </div>      
 </div>
 <div class="container" style="margin-top:100px">
   <?php 
-    $albumList = Album::create_album_list_by_user($user->get_id());
+    $albumList = Album::create_album_list_by_user($userID);
     if(!empty($albumList)){
         echo "<div class=\"row\">";
         foreach($albumList as $album){

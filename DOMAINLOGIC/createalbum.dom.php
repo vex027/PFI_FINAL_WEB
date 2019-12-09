@@ -10,8 +10,14 @@
 
     if(isset($_FILES['firstPic']) && isset($_POST['titleAlbum'])){
 
+        $album = new Album();
         $title = $_POST['titleAlbum'];
         $target_dir = "Images_Album/";
+
+        if($album->load_album_title($title)){
+            header("Location: ../error.php?ErrorMSG=Album already exists");
+            die();
+        }
 
         $media_file_type = pathinfo($_FILES['firstPic']['name'] ,PATHINFO_EXTENSION);
     

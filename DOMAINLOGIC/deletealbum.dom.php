@@ -30,8 +30,6 @@
     }
 
     $album->delete_album();
-
-    $albumID = $image->get_albumID();
     header("Location: ../accueil.php");
     die();
 ?>

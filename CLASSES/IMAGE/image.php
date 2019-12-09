@@ -165,8 +165,8 @@ class Image{
         if(validate_session()){
             if($_SESSION['userID']==$this->get_authorID()){
                 echo "<div class='card-header'>";
-                echo "<form method = 'post' action = 'DOMAINLOGIC/deleteimage.dom.php'>";
-                echo "<button class='btn btn-danger m-2' name='imageID' value='$this->imageID'><i class='material-icons'>delete_forever</i></button>";
+                echo "<form id='deleteImageForm' method = 'post' action = 'DOMAINLOGIC/deleteimage.dom.php'>";
+                echo "<button type='submit' class='btn btn-danger m-2 deleteImg' name='imageID' value='$this->imageID'><i class='material-icons'>delete_forever</i></button>";
                 echo "</form>";
                 echo "</div>";
             }
@@ -223,6 +223,6 @@ class Image{
         $TDG = ImageTDG::get_Instance();
         $res = $TDG->get_number_image_album($albumID); 
         $TDG = null;
-        return $res['number']; 
+        return $res['nombre']; 
     }
 }
