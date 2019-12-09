@@ -1,5 +1,6 @@
 <?php
     include "../CLASSES/IMAGE/image.php";
+    include __DIR__ . "/../UTILS/sanitizer.php";
     include __DIR__ . "/../UTILS/sessionhandler.php";
 
 
@@ -10,8 +11,8 @@
         die();
     }
 
-    $imageID = $_POST['imageID'];
-    $userID = $_SESSION['userID'];
+    $imageID = sanitize_string($_POST['imageID']);
+    $userID = sanitize_string($_SESSION['userID']);
 
     //Validation Posts
     $image = new Image();

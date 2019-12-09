@@ -1,5 +1,6 @@
 <?php
     include __DIR__ . "/../CLASSES/ALBUM/album.php";
+    include_once __DIR__ . "/../UTILS/sanitizer.php";
     include_once __DIR__ . "/../UTILS/sessionhandler.php";
     session_start();
 
@@ -11,7 +12,7 @@
     if(isset($_FILES['firstPic']) && isset($_POST['titleAlbum'])){
 
         $album = new Album();
-        $title = $_POST['titleAlbum'];
+        $title = sanitize_string($_POST['titleAlbum']);
         $target_dir = "Images_Album/";
 
         if($album->load_album_title($title)){
@@ -43,11 +44,11 @@
 
         //create entry in database
         $album = new Album();
-        $album->add_album($title,$_SESSION['userID'],$_POST['description']);
+        $album->add_album($title,$_SESSION['userID'],sanitize_string($_POST['description']));
         $album->load_album_title($title);
 
         $image = new Image();
-        $image->add_image($url,$album->get_id(),$_POST['descriptionIMG']);
+        $image->add_image($url,$album->get_id(),sanitize_string($_POST['descriptionIMG']));
         //redirection
         header("Location: ../accueil.php");
         die();

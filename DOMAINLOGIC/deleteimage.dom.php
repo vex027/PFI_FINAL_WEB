@@ -1,5 +1,4 @@
 <?php
-    
     include_once "../CLASSES/ALBUM/album.php";
     include_once "../CLASSES/COMMENTAIRES/commentaire.php";
 

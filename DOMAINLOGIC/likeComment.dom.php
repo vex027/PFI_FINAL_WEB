@@ -10,8 +10,9 @@
     }
     $commentaireID = $_POST['commentID'];
     $userID = $_SESSION['userID'];
-    $type = $_POST['type'];
+    $type =$_POST['type'];
     $parentID = $_POST['parentID'];
+
     //Validation Posts
     $commentaire = new Commentaire();
     $commentaire->load_Commentaire($commentaireID);

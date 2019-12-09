@@ -1,6 +1,7 @@
 <?php
     include "../CLASSES/USER/user.php";
     include "../UTILS/formvalidator.php";
+    include "../UTILS/sanitizer.php";
     include __DIR__ . "/../UTILS/sessionhandler.php";
 
     session_start();
@@ -10,8 +11,8 @@
       die();
     }
 
-    $email = $_POST["email"];
-    $username = $_POST["username"];
+    $email = sanitize_string($_POST["email"]);
+    $username = sanitize_string($_POST["username"]);
 
     //verification des parametres
     if(empty($email) && empty($username)){

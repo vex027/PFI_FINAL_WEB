@@ -1,7 +1,7 @@
 <?php
     include "../CLASSES/USER/user.php";
+    include __DIR__ . "/../UTILS/sanitizer.php";
     include __DIR__ . "/../UTILS/sessionhandler.php";
-
 
     session_start();
 
@@ -11,7 +11,7 @@
     }
 
     //prendre les variables du Post
-    $email = $_POST["email"];
+    $email = sanitize_string($_POST["email"]);
     $pw = $_POST["pw"];
 
     //Validation Posts

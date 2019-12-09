@@ -1,4 +1,5 @@
 <?php
+    include __DIR__ . "/../UTILS/sanitizer.php";
     include __DIR__ . "/../UTILS/sessionhandler.php";
     include __DIR__ . "/../CLASSES/COMMENTAIRES/commentaire.php";
     session_start();
@@ -12,7 +13,7 @@
 
     $type = $_GET["type"];
     $id = $_GET["id"];
-    $contenu = $_POST["commentaireIMG"];
+    $contenu = sanitize_string($_POST["commentaireIMG"]);
 
     $commentaire = new Commentaire();
     

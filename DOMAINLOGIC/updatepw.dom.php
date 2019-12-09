@@ -1,6 +1,7 @@
 <?php
   include "../CLASSES/USER/user.php";
   include "../UTILS/formvalidator.php";
+  include "../UTILS/sanitizer.php";
   include __DIR__ . "/../UTILS/sessionhandler.php";
   
   session_start();
@@ -15,9 +16,9 @@
     die();
   }
 
-  $oldpw = $_POST["oldpw"];
-  $newpw = $_POST["newpw"];
-  $pwval = $_POST["pwValidation"];
+  $oldpw = sanitize_string($_POST["oldpw"]);
+  $newpw = sanitize_string($_POST["newpw"]);
+  $pwval = sanitize_string($_POST["pwValidation"]);
 
 
   if(!Validator::validate_password($newpw)){
