@@ -1,3 +1,19 @@
+<script>
+    $(document).ready( function() {
+            $(".edit-btn").click( function() {
+                var id = $(this).attr('id');
+                var textArea =  $("#textAreaEdit-"+id);
+                if(textArea.hasClass("d-none")){
+                    textArea.removeClass('d-none');
+                    textArea.addClass('d-0');
+                } else{
+                    textArea.removeClass('d-0');
+                    textArea.addClass('d-none');
+                }
+            });
+        });
+</script>
+
 <div id='comments' class="container">
             <?php
                 $type ='ALB';
