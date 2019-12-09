@@ -264,4 +264,23 @@ class ImageTDG extends DBAO{
         $conn = null;
         return $result;
     }
+
+    public function add_views($imageID)
+    {
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "UPDATE $tableName set views = views + 1 where imageID = :imageID";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':imageID', $imageID);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
 }

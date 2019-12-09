@@ -9,6 +9,7 @@ class Image{
     private $albumID;
     private $description;
     private $dateCreation;
+    private $views;
 
     public function __construct(){ }
     
@@ -18,6 +19,10 @@ class Image{
 
     public function get_imageUrl(){
         return $this->imageUrl;
+    }
+
+    public function get_views(){
+        return $this->views;
     }
 
     public function get_albumID(){
@@ -62,6 +67,7 @@ class Image{
         $this->albumID = $res['albumID'];
         $this->description = $res['description'];
         $this->dateCreation = $res['dateCreation'];
+        $this->views = $res['views'];
 
         $TDG = null;
         return true;
@@ -112,27 +118,6 @@ class Image{
         $this->load_image($res['imageID']);
         return $res;
     }
-
-
-    /*public function get_description_by_image($imageID){
-
-        try{
-            $conn = $this->connect();
-            $tableName = $this->tableName;
-            $query = "SELECT description FROM $tableName WHERE imageID=:imageID";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':imageID', $imageID);
-            $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $stmt->fetchAll();
-        }
-        catch(PDOException $e)
-        {
-            echo "Error: " . $e->getMessage();
-        }
-        $conn = null;
-        return $result;
-    }*/
     
     public static function list_images_by_albums($albumID)
     {
@@ -178,6 +163,8 @@ class Image{
         echo "<h4 class='p2'> $likes</h4>";
         echo "<i class='fas fa-comment p-2'></i>";
         echo "<h4>$nombreCommentaire</h4>";
+        echo "<i class='fas fa-eye p-2'></i>";
+        echo "<h4>$this->views</h4>";
         echo "</div>";
         echo "<p class='card-text'> $this->dateCreation </p>";
         echo "</div>";
@@ -224,5 +211,14 @@ class Image{
         $res = $TDG->get_number_image_album($albumID); 
         $TDG = null;
         return $res['nombre']; 
+    }
+
+    public function add_view()
+    {    
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->add_views($this->imageID);
+        $TDG = null;
+        $this->load_image($this->imageID);
+        return $res;
     }
 }
