@@ -149,7 +149,7 @@ class Album{
         echo "<img class='card-img-top' src='$imageUrl'></a>";
         echo "<div class='card-footer'>";
         echo "<p class='card-text'><small class='text-muted'> By : <a class='text-decoration-none' href='profile.php?username=$authorName'>$authorName</a> | Créé le $date </small></p>";
-        echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:60%'></a>";
+        echo "<a href='profile.php?username=$authorName'><img src='$authorProfilPic' class='img-thumbnail' style='width:20%;height:50%'></a>";
         echo "<div class='row'>";
         echo "<i class='fas fa-arrow-alt-circle-up p-2'></i>";
         echo "<h4 class='p2'> $likes</h4>";
