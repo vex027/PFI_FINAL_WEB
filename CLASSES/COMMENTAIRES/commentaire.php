@@ -201,8 +201,8 @@ class Commentaire{
 
         if(validate_session()){
             if($_SESSION['userID']==$this->authorID){
-                echo "<form method = 'post' action = 'DOMAINLOGIC/deletecomment.dom.php' class='m-0'>";
-                echo "<button class='btn btn-danger btn-lg fa fa-trash m-3' name='commentID' value='$this->commentaireID'></button>";
+                echo "<form method = 'post' action = 'DOMAINLOGIC/deletecommentaire.dom.php' class='m-0'>";
+                echo "<button class='btn btn-danger btn-lg fa fa-trash m-3' name='commentaireID' value='$this->commentaireID'></button>";
                 echo "</form>";
 
                 echo "<button id='$this->commentaireID' class='btn btn-info fa fa-edit btn-lg m-3 edit-btn' name='albumID' value='$this->commentaireID'></button>";
@@ -211,8 +211,8 @@ class Commentaire{
         echo "</div>";
         echo "<div id='textAreaEdit-$this->commentaireID' class='row d-none'>";
         echo "<form method = 'post' action = 'DOMAINLOGIC/editcomment.dom.php' class='m-0 w-100'>";
-                echo "<textarea id='contenuEdit-$this->commentaireID' class='w-100'>$this->contenu</textarea>";
-                echo "<button class='btn btn-success btn-lg' type='submit'>Confirm Edit </button>";
+                echo "<textarea id='contenuEdit-$this->commentaireID' name='contenu' class='w-100'>$this->contenu</textarea>";
+                echo "<button class='btn btn-success btn-lg' type='submit' name='commentID' value='$this->commentaireID'>Confirm Edit </button>";
         echo "</form>";
         echo "</div>";
         echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";
