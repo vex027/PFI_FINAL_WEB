@@ -201,6 +201,25 @@ class AlbumTDG extends DBAO{
         return $resp;
     }
 
+    public function update_title($title,$id){
+        try{
+            $conn = $this->connect();
+            $tableName = $this->tableName;
+            $query = "UPDATE $tableName SET titre = :title where albumID = :id";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $resp =  true;
+        }
+        catch(PDOException $e)
+        {
+            $resp =  false;
+        }
+        $conn = null;
+        return $resp;
+    }
+
     public function delete_album($albumId){
         try{
             $conn = $this->connect();

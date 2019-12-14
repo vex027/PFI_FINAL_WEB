@@ -25,7 +25,7 @@
                     <a class='btn btn-success h-100' href='createimage.php?id=<?php echo $parentID?>'>Add Image</a>
                 </div>
                 <div class='col text-center'>
-                    <form method = 'post' action = 'editalbum.php'>
+                    <form method = 'post' action = 'editalbum.php?id=<?php echo $album->get_id()?>'>
                         <button id='editBtn' class='btn btn-info text-center' name='albumID' alt='Edit Album' value='<?php echo $parentID?>'>
                             <i class='fa fa-edit'></i> Edit Album
                         </button>

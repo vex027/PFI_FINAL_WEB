@@ -100,15 +100,23 @@ class Album{
         return true;
     }
 
-    public function update_description($description,$albumID){
+    public function update_description($description){
 
-        if(!$this->load_album($albumID))
-        {
-            return false;
-        }
         $this->description = $description;
+        $albumID = $this->get_id();
         $TDG = AlbumTDG::get_Instance();
         $res = $TDG->update_description($description,$albumID);
+
+        $TDG = null;
+        return $res;
+    }
+
+    public function update_title($title){
+
+        $this->title = $title;
+        $albumID = $this->get_id();
+        $TDG = AlbumTDG::get_Instance();
+        $res = $TDG->update_title($title,$albumID); //ici
 
         $TDG = null;
         return $res;
