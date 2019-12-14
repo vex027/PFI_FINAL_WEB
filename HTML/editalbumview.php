@@ -10,6 +10,6 @@
             <label for="description">Description de l'album (facultatif): </label>
             <textarea class="form-control" name="description" id="description" rows="3" id="titledescriptionAlbum"></textarea>     
         </div>
-        <button class="btn btn-success" type="submit">Ajouter un album</button>
+        <button class="btn btn-success" type="submit">Modifier un album</button>
     </form>
 </div>
