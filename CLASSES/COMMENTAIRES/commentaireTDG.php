@@ -211,15 +211,15 @@ class CommentaireTDG extends DBAO{
         return $resp;
     }
 
-    public function update_contenu($contenu,$id){
+    public function update_contenu($contenu,$commentaireID){
 
         try{
             $conn = $this->connect();
             $tableName = $this->tableName;
-            $query = "UPDATE $tableName SET contenu=:contenu WHERE userID=:id";
+            $query = "UPDATE $tableName SET contenu = :contenu WHERE commentaireID = :commentaireID";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(':contenu', $contenu);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':commentaireID', $commentaireID);
             $stmt->execute();
             $resp = true;
         }

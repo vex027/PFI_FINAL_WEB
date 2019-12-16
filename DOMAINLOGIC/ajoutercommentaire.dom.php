@@ -9,12 +9,14 @@
         die();
     }
 
-    
-
     $type = $_GET["type"];
     $id = $_GET["id"];
     $contenu = sanitize_string($_POST["commentaireIMG"]);
 
+    if(strlen(trim($contenu)) == 0){
+        header("Location: ../error.php?ErrorMSG=Commentaire non valide");
+        die();
+    }
     $commentaire = new Commentaire();
     
     if(!$commentaire->ajouter_commentaire($type,$contenu,$id,$_SESSION['userID'])){

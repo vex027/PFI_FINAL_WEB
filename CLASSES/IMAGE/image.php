@@ -205,6 +205,19 @@ class Image{
         return $res;
     }
 
+    public function remove_like($userID,$imageID)
+    {
+        if(empty($userID) || empty($imageID))
+        {
+            return false;
+        }
+        
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->remove_like($imageID,$userID);
+        $TDG = null;
+        return $res;
+    }
+
     public static function get_number_image_album($albumID)
     {
         $TDG = ImageTDG::get_Instance();
@@ -220,5 +233,17 @@ class Image{
         $TDG = null;
         $this->load_image($this->imageID);
         return $res;
+    }
+
+    public function get_user_alreadyLiked($userID)
+    {
+        if(!$this->load_image($this->imageID))
+        {
+          return false;
+        }
+        $TDG = ImageTDG::get_Instance();
+        $res = $TDG->get_like_number_user($this->imageID,$userID); 
+        $TDG = null;
+        return $res['likes'] == 1; 
     }
 }

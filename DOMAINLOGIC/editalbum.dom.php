@@ -13,6 +13,11 @@
     $album->load_album($_GET['id']);
 
     if(isset($_POST['titleAlbum'])){
+
+        if(strlen(trim($_POST['titleAlbum'])) == 0){
+            header("Location: ../error.php?ErrorMSG=Titre non valide");
+            die();
+        }
         $album->update_title($_POST['titleAlbum']);   
     }
 

@@ -20,6 +20,11 @@
             die();
         }
 
+        if(strlen(trim($title)) == 0){
+            header("Location: ../error.php?ErrorMSG=Titre non valide");
+            die();
+        }
+
         $media_file_type = pathinfo($_FILES['firstPic']['name'] ,PATHINFO_EXTENSION);
     
         $img_extensions_arr = array("jpg","jpeg","png","gif");

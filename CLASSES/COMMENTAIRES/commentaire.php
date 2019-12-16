@@ -67,13 +67,13 @@ class Commentaire{
 
     public function update_commentaire_info($contenu){
 
-        if(!$this->load_Commentaire($this->get_commentaireID()))
+        if(!$this->load_Commentaire($this->commentaireID))
         {
           return false;
         }
 
         $TDG = CommentaireTDG::get_Instance();
-        $res = $TDG->update_contenu($contenu,$id);
+        $res = $TDG->update_contenu($contenu,$this->commentaireID);
         $this->contenu = $contenu;    
         $TDG = null;
         return $res;
@@ -210,9 +210,9 @@ class Commentaire{
         }
         echo "</div>";
         echo "<div id='textAreaEdit-$this->commentaireID' class='row d-none'>";
-        echo "<form method = 'post' action = 'DOMAINLOGIC/editcomment.dom.php' class='m-0 w-100'>";
+        echo "<form method = 'post' action = 'DOMAINLOGIC/editcommentaire.dom.php' class='m-0 w-100'>";
                 echo "<textarea id='contenuEdit-$this->commentaireID' name='contenu' class='w-100'>$this->contenu</textarea>";
-                echo "<button class='btn btn-success btn-lg' type='submit' name='commentID' value='$this->commentaireID'>Confirm Edit </button>";
+                echo "<button class='btn btn-success btn-lg' type='submit' name='commentaireID' value='$this->commentaireID'>Confirm Edit </button>";
         echo "</form>";
         echo "</div>";
         echo "<a href='profile.php?username=$username'><img src='$profilPic' class='mr-3 mt-3 rounded-circle' style='width:60px'></a>";

@@ -1,7 +1,11 @@
 <?php 
     session_start();
     include "UTILS/sessionhandler.php";
-
+    include "CLASSES/ALBUM/album.php";
+    if(!validate_session()){
+        header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");
+        die();
+    }
     //load view content
     $module = "editalbumview.php";
     $content = array();

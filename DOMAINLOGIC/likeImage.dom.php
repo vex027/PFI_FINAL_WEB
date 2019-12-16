@@ -1,7 +1,7 @@
 <?php
     include "../CLASSES/IMAGE/image.php";
     include __DIR__ . "/../UTILS/sanitizer.php";
-    include __DIR__ . "/../UTILS/sessionhandler.php";
+    include_once __DIR__ . "/../UTILS/sessionhandler.php";
 
 
     session_start();
@@ -16,7 +16,13 @@
 
     //Validation Posts
     $image = new Image();
-
-    $image->add_like($userID,$imageID);
+    $image->load_image($imageID);
+    if($image->get_user_alreadyLiked($userID))
+    {
+        $image->remove_like($userID,$imageID);
+    }else
+    {
+        $image->add_like($userID,$imageID);
+    }
     header("Location: ../image.php?id=$imageID");
 ?>
