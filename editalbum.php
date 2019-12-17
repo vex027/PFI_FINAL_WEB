@@ -3,7 +3,18 @@
     include "UTILS/sessionhandler.php";
     include "CLASSES/ALBUM/album.php";
     if(!validate_session()){
-        header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");
+        header("Location: error.php?ErrorMSG=Not%20logged%20in!");
+        die();
+    }
+    $album = new Album();
+    if(!isset($_GET['id']) || !$album->load_album($_GET['id']))
+    {
+        header("Location: error.php?ErrorMSG=Album inexistant");
+        die();
+    } 
+
+    if($_SESSION["userID"] != $album->get_authorID()){
+        header("Location: error.php?ErrorMSG=Not%20the%20author!");
         die();
     }
     //load view content

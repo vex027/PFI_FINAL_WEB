@@ -116,13 +116,13 @@ class Album{
         $this->title = $title;
         $albumID = $this->get_id();
         $TDG = AlbumTDG::get_Instance();
-        $res = $TDG->update_title($title,$albumID); //ici
+        $res = $TDG->update_title($title,$albumID);
 
         $TDG = null;
         return $res;
     }
 
-    public function display_album() //Modifier pour pouvoir l'utiliser en search
+    public function display_album() 
     {
         $titre = $this->title;
         $id = $this->albumID;

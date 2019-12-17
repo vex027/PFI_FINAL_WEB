@@ -3,12 +3,21 @@
     include_once "../CLASSES/COMMENTAIRES/commentaire.php";
     include_once "../CLASSES/IMAGE/image.php";
     session_start();
+    if(!validate_session())
+    {
+        header("Location: ../error.php?ErrorMSG=not%20Logged!");
+        die();
+    }
 
     $album = new Album();
-    $album->load_album($_POST["albumID"]);
+    if(!isset($_POST["albumID"]) || !$album->load_album($_POST["albumID"]))
+    {
+        header("Location: ../error.php?ErrorMSG=Album inexistant");
+        die();
+    } 
 
     if($_SESSION["userID"] != $album->get_authorID()){
-        header("Location: error.php?ErrorMSG=Not%20the%20author!");
+        header("Location: ../error.php?ErrorMSG=Not%20the%20author!");
         die();
     }
 

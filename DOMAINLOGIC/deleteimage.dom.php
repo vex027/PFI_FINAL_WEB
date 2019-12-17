@@ -4,17 +4,26 @@
 
     session_start();
 
+    if(!validate_session())
+    {
+        header("Location: ../error.php?ErrorMSG=not%20Logged!");
+        die();
+    }
+
     $image = new Image();
-    $image->load_image($_POST["imageID"]);
+    if(!isset($_POST["imageID"]) || !$image->load_image($_POST["imageID"]))
+    {
+        header("Location: ../error.php?ErrorMSG=Image inexistante");
+        die();
+    } 
+    
     $album = new Album();
     $album->load_album($image->get_albumID());
 
     if($_SESSION["userID"] != $album->get_authorID()){
-        header("Location: error.php?ErrorMSG=Not%20the%20author!");
+        header("Location: ../error.php?ErrorMSG=Not%20the%20author!");
         die();
     }
-
-    
     
     $image->delete_image();
     

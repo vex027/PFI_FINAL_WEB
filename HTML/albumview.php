@@ -1,16 +1,11 @@
 <?php 
 
-    if(!isset($_GET['id'])){
-        header("Location: error.php?ErrorMSG=Album inexistant");
-        die();
-    }
-
     $album = new Album();
-    if(!$album->load_album($_GET['id'])){
+    if(!isset($_GET['id']) || !$album->load_album($_GET['id']))
+    {
         header("Location: error.php?ErrorMSG=Album inexistant");
         die();
-    }
-    
+    } 
     $parentID = $album->get_id();
     $author = new User();
     $author->load_user_id($album->get_authorID());
@@ -40,9 +35,6 @@
                 </div>
              </div>    
         <?php endif;?>  
-
-    <?php include "commentScript.php"?>
-
     <script>
         $(document).ready( function() {
         <?php if(validate_session() && isset($_SESSION['userID']) && $album->get_user_alreadyLiked($_SESSION['userID'])) : ?>      

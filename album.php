@@ -2,7 +2,6 @@
     session_start();
     include "UTILS/sessionhandler.php";
     include "CLASSES/ALBUM/album.php";
-
     //load view content
     $module = "albumview.php";
     $content = array();

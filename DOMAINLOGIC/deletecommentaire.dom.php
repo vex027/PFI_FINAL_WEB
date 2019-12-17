@@ -3,15 +3,19 @@
     session_start();
     if(!validate_session())
     {
-        header("Location: error.php?ErrorMSG=not%20Logged!");
+        header("Location: ../error.php?ErrorMSG=not%20Logged!");
         die();
     }
 
     $commentaire = new Commentaire();
-    $commentaire->load_Commentaire($_POST['commentaireID']);
+    if(!isset($_POST['commentaireID']) || !$commentaire->load_Commentaire($_POST['commentaireID']))
+    {
+        header("Location: ../error.php?ErrorMSG=Commentaire inexistant");
+        die();
+    } 
 
-    if($commentaire->get_authorID() == $_SESSION['userID']){
-        header("Location: error.php?ErrorMSG=Not the author !");
+    if($commentaire->get_authorID() != $_SESSION['userID']){
+        header("Location: ../error.php?ErrorMSG=Not the author !");
         die();
     }
     
