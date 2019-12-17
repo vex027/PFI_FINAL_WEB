@@ -27,7 +27,7 @@
     
     $image->delete_image();
     
-    $file_pointer = "../".$image->get_imageUrl();  
+    $file_pointer = "../".$image->get_imageUrl(); 
     unlink($file_pointer);
 
     $commentaireList = Commentaire::create_commentaire_list_image_noLimit($image->get_imageID());

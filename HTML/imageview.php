@@ -60,7 +60,6 @@
                 </blockquote>
             </div>
         </div>
-        <!--Upvote arrow & nb de UpVotes  -->
         <div class="d-flex flex-row bd-highlight border-top border-dark mb-sm 5 mb-5">
             <h1 >Espace Commentaire</h1>
         </div>
