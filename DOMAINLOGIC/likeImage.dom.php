@@ -3,7 +3,6 @@
     include __DIR__ . "/../UTILS/sanitizer.php";
     include_once __DIR__ . "/../UTILS/sessionhandler.php";
 
-
     session_start();
 
     if(!validate_session()){

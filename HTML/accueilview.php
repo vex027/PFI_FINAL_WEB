@@ -1,5 +1,4 @@
 <?php 
-
     if(isset($_SESSION['userID']))
     {
         echo "<a class='btn btn-success' href='createalbum.php'> Create Album</a>";

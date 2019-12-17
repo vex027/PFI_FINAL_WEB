@@ -2,7 +2,6 @@
     include "../CLASSES/ALBUM/album.php";
     include_once __DIR__ . "/../UTILS/sessionhandler.php";
 
-
     session_start();
     if(!validate_session()){
         header("Location: ../error.php?ErrorMSG=Not%20logged%20in!");

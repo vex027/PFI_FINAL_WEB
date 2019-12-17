@@ -1,5 +1,4 @@
 <?php 
-
     $album = new Album();
     if(!isset($_GET['id']) || !$album->load_album($_GET['id']))
     {
