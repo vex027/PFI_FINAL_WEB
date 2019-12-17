@@ -250,15 +250,7 @@ class User{
         $TDG = null;
         return $res["username"];
     }
-
-   /* public static function user_exists($id)
-    {
-        $res = get_username_by_ID($id);
-        if($res ==null){
-            return false;
-        }
-        return true;
-    }*/
+    
     public static function list_all_user_like_username($username)
     {
         $TDG = UserTDG::getInstance();
