@@ -29,10 +29,6 @@ class User{
 
     public function get_imagesProfile()
     {
-        if(!file_exists($this->imageProfile))
-        {
-            $this->update_user_image($this->email,"Images_Profil/default.jpg");
-        }
         return $this->imageProfile;
     }
 

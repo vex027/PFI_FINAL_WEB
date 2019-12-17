@@ -13,7 +13,7 @@
     $album->load_album($_GET['id']);
 
     if($_SESSION["userID"] != $album->get_authorID()){
-        header("Location: error.php?ErrorMSG=Not%20the%20author!");
+        header("Location: ../error.php?ErrorMSG=Not%20the%20author!");
         die();
     }
 

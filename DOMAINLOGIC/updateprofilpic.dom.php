@@ -37,6 +37,14 @@
 
         //create entry in database
         $user = new User();
+        $user->load_user_id($_SESSION["userID"]);
+
+        if($user->get_imagesProfile() != "Images_Profil/default.jpg")
+        {
+            $file_pointer = "../".$user->get_imagesProfile(); 
+            unlink($file_pointer);
+        }
+
         $user->update_user_image($_SESSION["userEmail"],$url);
         //redirection
         $username = $_SESSION["userName"];
